@@ -31,7 +31,13 @@ function App() {
     document.getElementById(sectionId)?.scrollIntoView({ behavior: "smooth" });
     setIsMenuOpen(false);
   };
-
+const menuItems = [
+  { name: "Home", id: "home" },
+  { name: "Services", id: "services" }, // or "programs" if you're changing it
+  { name: "Pricing", id: "pricing" }, // or "gallery" 
+  { name: "About", id: "about" },
+  { name: "Contact", id: "contact" }
+];
   const handleGiveAccess = () => {
     if (videoRef.current) {
       videoRef.current.pause();
@@ -96,13 +102,14 @@ function App() {
     <div className="min-h-screen bg-white animate-fade-in">
       {/* Header */}
       <header className="fixed top-0 left-0 right-0 bg-white/95 backdrop-blur-sm shadow-sm z-50">
-          <div className="px-2 h-[4.5rem]">
+        <div className="px-2 h-[4.5rem]">
           <div className="flex items-center justify-between h-full">
             <div className="flex items-center">
               <img
                 src="/images/logo5.png"
                 alt="SmartgenAI Innovations Logo"
                 className="w-[16rem] h-[16rem]"
+                style={{ marginTop: "12px", marginLeft: "-30px" }} // Negative left margin
               />
             </div>
             <nav className="hidden md:flex space-x-8">
@@ -121,29 +128,28 @@ function App() {
             <button
               className="md:hidden"
               onClick={() => setIsMenuOpen(!isMenuOpen)}
+              style={{ color: "#000" }} // Force black color
             >
               {isMenuOpen ? (
-                <X className="w-6 h-6" />
+                <X className="w-6 h-6" style={{ color: "#000" }} />
               ) : (
-                <Menu className="w-6 h-6" />
+                <Menu className="w-6 h-6" style={{ color: "#000" }} />
               )}
             </button>
           </div>
           {isMenuOpen && (
-            <nav className="md:hidden mt-4 pb-4">
-              {["Home", "Services", "Pricing", "About", "Contact"].map(
-                (item) => (
-                  <button
-                    key={item}
-                    onClick={() => scrollToSection(item.toLowerCase())}
-                    className="block w-full text-left py-2 text-gray-700 hover:text-blue-600 font-medium transition-colors duration-200"
-                  >
-                    {item}
-                  </button>
-                )
-              )}
-            </nav>
-          )}
+  <nav className="md:hidden bg-white border-t border-gray-200 py-4">
+    {menuItems.map((item) => (
+      <button
+        key={item.name}
+        onClick={() => scrollToSection(item.id)}
+        className="block w-full text-left py-4 px-6 text-gray-700 hover:bg-gray-50 border-b border-gray-100 font-medium text-lg transition-colors duration-200"
+      >
+        {item.name}
+      </button>
+    ))}
+  </nav>
+)}
         </div>
       </header>
 
