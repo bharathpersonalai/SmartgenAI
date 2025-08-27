@@ -19,6 +19,49 @@ import {
   BrainCircuit as Circuit,
   Sparkles,
 } from "lucide-react";
+type Plan = {
+  name: string;
+  price: string;
+  originalPrice: string | null;
+  discountPercentage?: number;
+  features: string[];
+  popular?: boolean;
+};
+type SocialMedia = "whatsapp" | "instagram" | "linkedin";  // Define possible social media types
+
+const handleSocialClick = (social: SocialMedia) => {
+  let url = "";
+
+  switch (social) {
+    case "whatsapp":
+      url = "https://wa.me/918332010304";  // Replace with your WhatsApp number
+      break;
+    case "instagram":
+      url = "https://www.instagram.com/smartgenaiinnovations?igsh=NTduNHRpaGcybHl1";  // Replace with your Instagram username
+      break;
+    case "linkedin":
+      url = "https://www.linkedin.com/company/smartgenai-innovations/";  // Replace with your LinkedIn username
+      break;
+    default:
+      return;
+  }
+
+  // Adding a delay of 2 seconds before opening the link
+  setTimeout(() => {
+    window.open(url, "_blank");
+  }, 1000);
+};
+
+const handleWhatsAppRedirect = (plan: Plan) => {
+  const planDetails = `
+    Plan: ${plan.name}
+    Price: ${plan.price}
+    Features: ${plan.features.join(", ")}
+  `;
+  const encodedMessage = encodeURIComponent(planDetails);
+  const whatsappLink = `https://wa.me/918332010304?text=${encodedMessage}`; // Replace with your WhatsApp number
+  window.open(whatsappLink, "_blank");
+};
 
 function App() {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
@@ -31,13 +74,17 @@ function App() {
     document.getElementById(sectionId)?.scrollIntoView({ behavior: "smooth" });
     setIsMenuOpen(false);
   };
-const menuItems = [
-  { name: "Home", id: "home" },
-  { name: "Services", id: "services" }, // or "programs" if you're changing it
-  { name: "Pricing", id: "pricing" }, // or "gallery" 
-  { name: "About", id: "about" },
-  { name: "Contact", id: "contact" }
-];
+  const menuItems = [
+    { name: "Home", id: "home" },
+    { name: "Services", id: "services" }, // or "programs" if you're changing it
+    { name: "Pricing", id: "pricing" }, // or "gallery"
+    { name: "About", id: "about" },
+    { name: "Contact", id: "contact" },
+  ];
+  const handleCardClick = (e: React.MouseEvent) => {
+    const cardContainer = e.currentTarget;
+    cardContainer.classList.toggle("clicked"); // Toggle the "clicked" class to trigger the flip
+  };
   const handleGiveAccess = () => {
     if (videoRef.current) {
       videoRef.current.pause();
@@ -76,7 +123,7 @@ const menuItems = [
               className="bg-gradient-to-r from-cyan-500 via-blue-600 to-purple-700 text-white px-12 py-4 rounded-full text-xl font-bold hover:from-cyan-400 hover:via-blue-500 hover:to-purple-600 transform hover:scale-110 transition-all duration-300 shadow-2xl hover:shadow-cyan-500/25 animate-fade-in-up animate-pulse"
               style={{ animationDelay: "1s" }}
             >
-              Give Access
+              Click here
             </button>
           </div>
         </div>
@@ -138,18 +185,18 @@ const menuItems = [
             </button>
           </div>
           {isMenuOpen && (
-  <nav className="md:hidden bg-white border-t border-gray-200 py-4">
-    {menuItems.map((item) => (
-      <button
-        key={item.name}
-        onClick={() => scrollToSection(item.id)}
-        className="block w-full text-left py-4 px-6 text-gray-700 hover:bg-gray-50 border-b border-gray-100 font-medium text-lg transition-colors duration-200"
-      >
-        {item.name}
-      </button>
-    ))}
-  </nav>
-)}
+            <nav className="md:hidden bg-white border-t border-gray-200 py-4">
+              {menuItems.map((item) => (
+                <button
+                  key={item.name}
+                  onClick={() => scrollToSection(item.id)}
+                  className="block w-full text-left py-4 px-6 text-gray-700 hover:bg-gray-50 border-b border-gray-100 font-medium text-lg transition-colors duration-200"
+                >
+                  {item.name}
+                </button>
+              ))}
+            </nav>
+          )}
         </div>
       </header>
 
@@ -175,14 +222,18 @@ const menuItems = [
 
         {/* Content */}
         <div className="container mx-auto px-4 py-16 relative z-10">
-          <div className="text-center max-w-4xl mx-auto p-20">
-            <h1 className="text-5xl md:text-7xl font-bold mb-6 leading-tight">
+          {/* Use responsive padding: smaller on mobile, larger on desktop */}
+          <div className="text-center max-w-4xl mx-auto px-4 py-8 sm:py-12 md:py-16">
+            {/* Use responsive font sizes for the title */}
+            <h1 className="text-4xl sm:text-5xl md:text-7xl font-bold mb-6 leading-tight">
               Beyond Automation{" "}
               <span className="bg-gradient-to-r from-blue-400 to-purple-400 bg-clip-text text-transparent">
                 True Innovation
               </span>
             </h1>
-            <p className="text-xl md:text-2xl text-gray-200 mb-8 max-w-2xl mx-auto">
+
+            {/* Use responsive font sizes for the paragraph */}
+            <p className="text-lg sm:text-xl md:text-2xl text-gray-200 mb-8 max-w-2xl mx-auto">
               From custom web applications to intelligent automation, we provide
               the tools your business needs to lead the future
             </p>
@@ -201,44 +252,36 @@ const menuItems = [
               Powered by artificial intelligence to deliver superior results
             </p>
           </div>
-          <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-8">
+          <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
             {[
               {
-                icon: Bot,
                 title: "AI-Powered Custom Websites",
                 description:
-                  "Intelligent websites that learn and adapt to your users behavior and preferences.",
+                  "We build websites that are fast, modern, and can adjust to your customer’s needs. They give a personal touch, making every visitor feel connected to your business.",
               },
               {
-                icon: Cpu,
                 title: "Smart Web Applications",
                 description:
-                  "Advanced web apps with AI features like chatbots, recommendations, and automation.",
+                  "Not just websites, but powerful online platforms where people can interact like booking systems, dashboards, or customer portals. Built to make your business run smoother and serve customers better.",
               },
               {
-                icon: Smartphone,
-                title: "Responsive AI Design",
+                title: "AI Automation Tools (Coming Soon 🚀)",
                 description:
-                  "AI-optimized responsive designs that automatically adjust for perfect user experience.",
-              },
-              {
-                icon: Search,
-                title: "AI SEO Optimization",
-                description:
-                  "Machine learning algorithms optimize your content for maximum search visibility.",
+                  "We are testing powerful AI tools that will soon help businesses automate daily tasks, reduce manual work, and increase productivity. Stay tuned for launch!",
               },
             ].map((service, index) => (
-              <div
-                key={index}
-                className="bg-white p-6 rounded-xl border border-gray-200 hover:border-blue-300 hover:shadow-lg transform hover:-translate-y-1 transition-all duration-300"
-              >
-                <div className="w-12 h-12 bg-gradient-to-r from-blue-600 to-purple-600 rounded-lg flex items-center justify-center mb-4">
-                  <service.icon className="w-6 h-6 text-white" />
+              <div key={index} className="flip-card">
+                <div className="flip-card-inner">
+                  <div className="flip-card-front">
+                    <h3 className="text-2xl font-semibold text-gray-900">
+                      {service.title}
+                    </h3>
+                    <p className="mt-4 text-gray-500">Tap here to see more</p>
+                  </div>
+                  <div className="flip-card-back">
+                    <p className="text-white">{service.description}</p>
+                  </div>
                 </div>
-                <h3 className="text-xl font-semibold text-gray-900 mb-3">
-                  {service.title}
-                </h3>
-                <p className="text-gray-600">{service.description}</p>
               </div>
             ))}
           </div>
@@ -267,20 +310,21 @@ const menuItems = [
                   "Responsive design (mobile + tablet + desktop)",
                   "SEO Setup (meta tags, titles, alt text)",
                   "Social Media Links Integration",
-                  "Website Maintenance",
+                  "Basic Contact Form",
                 ],
+                discountPercentage: 80, // 80% off for AI Standard
               },
               {
                 name: "AI Professional",
-                price: "₹3,000",
+                price: "₹2,999",
                 originalPrice: "₹8,000",
+                discountPercentage: 63, // 63% off for AI Professional
                 features: [
-                  "AI Multi-Page Website",
-                  "Advanced AI Design",
-                  "Smart SEO Optimization",
-                  "90 Days AI Support",
-                  "AI Contact Forms",
-                  "Social Media AI Integration",
+                  "AI Standard (Included)",
+                  "Extra Gallery Images",
+                  "2 months free web hosting",
+                  "Chatgpt/Gemini AI Integration",
+                  "Priority Support",
                 ],
                 popular: true,
               },
@@ -330,27 +374,30 @@ const menuItems = [
                   </div>
                   {plan.originalPrice && (
                     <span className="text-green-600 text-sm font-semibold">
-                      80% OFF
+                      {plan.discountPercentage}% OFF
                     </span>
                   )}
                 </div>
                 <ul className="space-y-3 mb-8">
                   {plan.features.map((feature, featureIndex) => (
+                    // We can keep items-center, as you preferred
                     <li key={featureIndex} className="flex items-center">
-                      <div className="w-2 h-2 bg-blue-600 rounded-full mr-3"></div>
+                      {/* Add flex-shrink-0 to the dot's div */}
+                      <div className="w-2 h-2 bg-blue-600 rounded-full mr-3 flex-shrink-0"></div>
+
                       <span className="text-gray-600">{feature}</span>
                     </li>
                   ))}
                 </ul>
                 <button
-                  onClick={() => scrollToSection("contact")}
+                  onClick={() => handleWhatsAppRedirect(plan)}
                   className={`w-full py-3 rounded-lg font-semibold transition-all duration-200 ${
                     plan.popular
                       ? "bg-gradient-to-r from-blue-600 to-purple-600 text-white hover:from-blue-700 hover:to-purple-700 shadow-lg hover:shadow-xl"
                       : "bg-gray-100 text-gray-900 hover:bg-gray-200"
                   }`}
                 >
-                  Order Now
+                  Contact now
                 </button>
               </div>
             ))}
@@ -414,17 +461,7 @@ const menuItems = [
                 Send Message
               </button>
             </form>
-            <div className="flex justify-center space-x-6 mt-8">
-              {[Facebook, Twitter, Instagram, Linkedin].map((Icon, index) => (
-                <a
-                  key={index}
-                  href="#"
-                  className="w-12 h-12 bg-white rounded-full flex items-center justify-center shadow-lg hover:shadow-xl transform hover:-translate-y-1 transition-all duration-200 text-gray-600 hover:text-blue-600"
-                >
-                  <Icon className="w-5 h-5" />
-                </a>
-              ))}
-            </div>
+            
           </div>
         </div>
       </section>
