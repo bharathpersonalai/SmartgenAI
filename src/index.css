@@ -140,19 +140,22 @@ body {
 }
 
 /* Hover effects */
-.Btn:hover {
+.Btn:hover,
+.Btn.expanded {
   width: 150px;
   border-radius: 40px;
   transition-duration: 0.3s;
 }
 
-.Btn:hover .sign {
+.Btn:hover .sign,
+.Btn.expanded .sign {
   width: 30%;
   transition-duration: 0.3s;
   padding-left: 10px;
 }
 
-.Btn:hover .text {
+.Btn:hover .text,
+.Btn.expanded .text {
   opacity: 1;
   width: 70%;
   transition-duration: 0.3s;
