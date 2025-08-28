@@ -59,15 +59,17 @@ function App() {
   };
   const [activeButton, setActiveButton] = useState<number | null>(null);
   const handleButtonClick = (url: string, index: number) => {
-    // Set the clicked button as active to trigger the animation
+    // The link now opens immediately, without a delay.
+    window.open(url, "_blank");
+
+    // We can still trigger the animation for users who right-click
+    // or for the brief moment before the new tab opens.
     setActiveButton(index);
 
-    // After a 1.5 second delay, open the link
+    // Reset the button state after a short moment
     setTimeout(() => {
-      window.open(url, "_blank");
-      // Reset the active button after navigating
       setActiveButton(null);
-    }, 1000); // 1000 milliseconds = 1 seconds
+    }, 300);
   };
   useEffect(() => {
     if (stage === "main") {
@@ -137,7 +139,7 @@ function App() {
               />
             </div>
             <nav className="hidden md:flex space-x-8">
-              {["Home", "Services", "Pricing", "About", "Contact"].map(
+              {["Home", "Services", "Pricing", "Contact", "About"].map(
                 (item) => (
                   <button
                     key={item}
@@ -446,7 +448,10 @@ function App() {
                   activeButton === 0 ? "expanded" : ""
                 }`}
                 onClick={() =>
-                  handleButtonClick('https://wa.me/918332010304?text=Hi%20I%20would%20like%20to%20know%20more', 0)
+                  handleButtonClick(
+                    "https://wa.me/918332010304?text=Hi%20I%20would%20like%20to%20know%20more",
+                    0
+                  )
                 }
               >
                 <div className="sign">
@@ -529,6 +534,7 @@ function App() {
       <footer className="bg-gray-900 text-white py-12">
         <div className="container mx-auto px-4">
           <div className="grid md:grid-cols-3 gap-8 mb-8">
+            {/* Column 1: Company Info */}
             <div>
               <div className="flex items-center space-x-2 mb-4">
                 <span className="text-lg font-bold">
@@ -539,22 +545,44 @@ function App() {
                 Pioneering AI-driven web development for the future.
               </p>
             </div>
+
+            {/* Column 2: Quick Links (Updated) */}
             <div>
-              <h3 className="text-lg font-semibold mb-4">Quick Links</h3>
-              <div className="space-y-2">
-                {["Home", "Services", "Pricing", "About", "Contact"].map(
-                  (item) => (
+              <h3 className="text-lg font-semibold mb-4 text-center">
+                Quick Links
+              </h3>
+
+              {/* Main flex container for the two columns */}
+              <div className="flex items-start justify-center gap-16">
+                {/* Link Column A */}
+                <div className="space-y-2">
+                  {["Home", "Services", "Pricing"].map((item) => (
                     <button
                       key={item}
                       onClick={() => scrollToSection(item.toLowerCase())}
-                      className="block text-gray-400 hover:text-white transition-colors duration-200"
+                      className="block text-gray-400 hover:text-white transition-colors duration-200 text-left"
                     >
                       {item}
                     </button>
-                  )
-                )}
+                  ))}
+                </div>
+
+                {/* Link Column B */}
+                <div className="space-y-2">
+                  {["Contact", "About"].map((item) => (
+                    <button
+                      key={item}
+                      onClick={() => scrollToSection(item.toLowerCase())}
+                      className="block text-gray-400 hover:text-white transition-colors duration-200 text-left"
+                    >
+                      {item}
+                    </button>
+                  ))}
+                </div>
               </div>
             </div>
+
+            {/* Column 3: Made in India */}
             <div>
               <h3 className="text-lg font-semibold mb-4">
                 Made with ❤️ in India
@@ -564,6 +592,7 @@ function App() {
               </p>
             </div>
           </div>
+
           <div className="border-t border-gray-800 pt-8 text-center">
             <p className="text-gray-400">
               Copyright © 2025 SmartgenAI Innovations. All rights reserved.
