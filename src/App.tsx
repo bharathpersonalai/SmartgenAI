@@ -22,8 +22,7 @@ type Plan = {
 const handleWhatsAppRedirect = (plan: Plan) => {
   const planDetails = `
     Plan: ${plan.name}
-    Price: ${plan.price}
-    Features: ${plan.features.join(", ")}
+    Price: ${plan.price} 
   `;
   const encodedMessage = encodeURIComponent(planDetails);
   const whatsappLink = `https://wa.me/918332010304?text=${encodedMessage}`; // Replace with your WhatsApp number
@@ -68,7 +67,7 @@ function App() {
       window.open(url, "_blank");
       // Reset the active button after navigating
       setActiveButton(null);
-    }, 1500); // 1500 milliseconds = 1.5 seconds
+    }, 1000); // 1000 milliseconds = 1 seconds
   };
   useEffect(() => {
     if (stage === "main") {
@@ -447,7 +446,7 @@ function App() {
                   activeButton === 0 ? "expanded" : ""
                 }`}
                 onClick={() =>
-                  handleButtonClick("https://wa.me/918332010304", 0)
+                  handleButtonClick('https://wa.me/918332010304?text=Hi%20I%20would%20like%20to%20know%20more', 0)
                 }
               >
                 <div className="sign">
