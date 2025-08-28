@@ -1,4 +1,5 @@
 import React, { useState, useRef, useEffect } from "react";
+import toast, { Toaster } from 'react-hot-toast'; // <-- 1. IMPORT TOAST
 import {
   Menu,
   X,
@@ -35,20 +36,20 @@ function App() {
   const [stage, setStage] = useState("intro");
   const videoRef = useRef<HTMLVideoElement>(null);
   const [activeButton, setActiveButton] = useState<number | null>(null);
-
-  // This new state tracks which "page" is currently visible.
-  const [currentPage, setCurrentPage] = useState('main');
+  const [currentPage, setCurrentPage] = useState("main");
 
   const scrollToSection = (sectionId: string) => {
-    // If we are not on the main page, switch to it first, then scroll.
-    if (currentPage !== 'main') {
-      setCurrentPage('main');
-      // Use a short timeout to allow the main page to render before scrolling
+    if (currentPage !== "main") {
+      setCurrentPage("main");
       setTimeout(() => {
-        document.getElementById(sectionId)?.scrollIntoView({ behavior: "smooth" });
+        document
+          .getElementById(sectionId)
+          ?.scrollIntoView({ behavior: "smooth" });
       }, 100);
     } else {
-      document.getElementById(sectionId)?.scrollIntoView({ behavior: "smooth" });
+      document
+        .getElementById(sectionId)
+        ?.scrollIntoView({ behavior: "smooth" });
     }
     setIsMenuOpen(false);
   };
@@ -58,7 +59,7 @@ function App() {
     { name: "Services", id: "services" },
     { name: "Pricing", id: "pricing" },
     { name: "Contact", id: "contact" },
-    { name: "About", id: "about" }, 
+    { name: "About", id: "about" },
   ];
 
   const handleGiveAccess = () => {
@@ -76,6 +77,38 @@ function App() {
     }, 300);
   };
 
+  // --- NEW CODE: FORM SUBMISSION HANDLER ---
+  const handleFormSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
+    event.preventDefault(); // Prevent the default form redirect
+    const form = event.currentTarget;
+    const formData = new FormData(form);
+
+    try {
+      await fetch("/", {
+        method: "POST",
+        headers: { "Content-Type": "application/x-www-form-urlencoded" },
+        body: new URLSearchParams(formData as any).toString(),
+      });
+      
+      // Show success toast
+      toast.success('Message sent successfully!', {
+        position: "top-right",
+        style: {
+          background: '#4ade80', // green-400
+          color: '#ffffff',
+        },
+      });
+
+      form.reset(); // Clear the form fields
+    } catch (error) {
+      // Show error toast
+      toast.error('Something went wrong.', {
+        position: "top-right",
+      });
+    }
+  };
+
+
   useEffect(() => {
     if (stage === "main") {
       document.body.style.overflow = "auto";
@@ -84,14 +117,15 @@ function App() {
     }
   }, [stage]);
 
-  // This is the component for your new "About Founder" page.
   const AboutFounderPage = () => (
     <div className="min-h-screen bg-white animate-fade-in">
       <header className="bg-white shadow-sm sticky top-0 z-50">
         <div className="container mx-auto px-4 h-20 flex items-center justify-between">
-          <span className="text-xl font-bold text-gray-900">About the Founder</span>
-          <button 
-            onClick={() => setCurrentPage('main')} 
+          <span className="text-xl font-bold text-gray-900">
+            About the Founder
+          </span>
+          <button
+            onClick={() => setCurrentPage("main")}
             className="font-semibold text-blue-600 hover:text-blue-800"
           >
             &larr; Back to Main Site
@@ -100,18 +134,19 @@ function App() {
       </header>
       <main className="container mx-auto px-4 py-16">
         <h1 className="text-4xl font-bold mb-4">Founder Details</h1>
-        <p className="mb-8 text-gray-600">This is where you can add the founder's bio, portfolio, achievements, and other relevant info.</p>
-        {/* You can add more sections here for Portfolio, Achievements, etc. */}
+        <p className="mb-8 text-gray-600">
+          This is where you can add the founder's bio, portfolio, achievements,
+          and other relevant info.
+        </p>
       </main>
     </div>
   );
 
-  // This switch statement now controls what the user sees.
   switch (currentPage) {
-    case 'about-founder':
+    case "about-founder":
       return <AboutFounderPage />;
 
-    case 'main':
+    case "main":
     default:
       if (stage === "intro") {
         return (
@@ -160,31 +195,39 @@ function App() {
 
       return (
         <div className="min-h-screen bg-white animate-fade-in">
+          {/* --- NEW CODE: TOASTER COMPONENT --- */}
+          <Toaster />
+
           {/* Header */}
           <header className="fixed top-0 left-0 right-0 bg-white/95 backdrop-blur-sm shadow-sm z-50">
             <div className="px-2 h-[4.5rem]">
               <div className="flex items-center justify-between h-full">
                 <div className="flex items-center">
-                  <a href="#home" onClick={(e) => { e.preventDefault(); scrollToSection('home'); }}>
+                  <a
+                    href="#home"
+                    onClick={(e) => {
+                      e.preventDefault();
+                      scrollToSection("home");
+                    }}
+                  >
                     <img
                       src="/images/logo5.png"
                       alt="SmartgenAI Innovations Logo"
                       className="w-[16rem] h-[16rem]"
-                  style={{ marginTop: "12px", marginLeft: "-30px" }} // Negative left margin
+                      style={{ marginTop: "12px", marginLeft: "-30px" }}
                     />
                   </a>
                 </div>
                 <nav className="hidden md:flex space-x-8">
                   {menuItems.map((item) => (
-                      <button
-                        key={item.name}
-                        onClick={() => scrollToSection(item.id)}
-                        className="text-gray-700 hover:text-blue-600 font-medium transition-colors duration-200"
-                      >
-                        {item.name}
-                      </button>
-                    )
-                  )}
+                    <button
+                      key={item.name}
+                      onClick={() => scrollToSection(item.id)}
+                      className="text-gray-700 hover:text-blue-600 font-medium transition-colors duration-200"
+                    >
+                      {item.name}
+                    </button>
+                  ))}
                 </nav>
                 <button
                   className="md:hidden"
@@ -215,9 +258,18 @@ function App() {
           </header>
 
           {/* 1. Welcome Section (Hero) */}
-          <section id="home" className="relative pt-20 pb-16 text-white overflow-hidden">
+          <section
+            id="home"
+            className="relative pt-20 pb-16 text-white overflow-hidden"
+          >
             <div className="absolute inset-0 z-0">
-              <video autoPlay loop muted playsInline className="w-full h-full object-cover">
+              <video
+                autoPlay
+                loop
+                muted
+                playsInline
+                className="w-full h-full object-cover"
+              >
                 <source src="/videos/intro_video2.mp4" type="video/mp4" />
               </video>
               <div className="absolute inset-0 bg-black opacity-50"></div>
@@ -231,8 +283,8 @@ function App() {
                   </span>
                 </h1>
                 <p className="text-lg sm:text-xl md:text-2xl text-gray-200 mb-8 max-w-2xl mx-auto">
-                  From custom web applications to intelligent automation, we provide
-                  the tools your business needs to lead the future
+                  From custom web applications to intelligent automation, we
+                  provide the tools your business needs to lead the future
                 </p>
               </div>
             </div>
@@ -273,7 +325,9 @@ function App() {
                         <h3 className="text-2xl font-semibold text-gray-900">
                           {service.title}
                         </h3>
-                        <p className="mt-4 text-gray-500">Tap here to see more</p>
+                        <p className="mt-4 text-gray-500">
+                          Tap here to see more
+                        </p>
                       </div>
                       <div className="flip-card-back">
                         <p className="text-white">{service.description}</p>
@@ -400,7 +454,10 @@ function App() {
           </section>
 
           {/* 4. Contact Section */}
-          <section id="contact" className="py-16 bg-gradient-to-br from-blue-50 to-purple-50">
+          <section
+            id="contact"
+            className="py-16 bg-gradient-to-br from-blue-50 to-purple-50"
+          >
             <div className="container mx-auto px-4">
               <div className="text-center mb-12">
                 <h2 className="text-4xl font-bold text-gray-900 mb-4">
@@ -412,11 +469,13 @@ function App() {
                 </p>
               </div>
               <div className="max-w-2xl mx-auto">
+                {/* --- NEW CODE: UPDATED FORM TAG --- */}
                 <form
                   name="contact"
                   method="POST"
                   data-netlify="true"
                   data-netlify-honeypot="bot-field"
+                  onSubmit={handleFormSubmit} // Use the new handler
                   className="bg-white p-8 rounded-2xl shadow-lg"
                 >
                   <input type="hidden" name="form-name" value="contact" />
@@ -463,7 +522,7 @@ function App() {
                       required
                     ></textarea>
                   </div>
-                  <div className="flex justify-between items-center">
+                  <div className="flex flex-col sm:flex-row sm:justify-between items-center gap-4">
                     <button type="button" className="button-ai">
                       Draft with AI
                       <div className="star-1"><svg xmlns="http://www.w3.org/2000/svg" xmlSpace="preserve" version="1.1" viewBox="0 0 784.11 815.53"><path className="fil0" d="M392.05 0c-20.9,210.08 -184.06,378.41 -392.05,407.78 207.96,29.37 371.12,197.68 392.05,407.74 20.93,-210.06 184.09,-378.37 392.05,-407.74 -207.98,-29.38 -371.16,-197.69 -392.06,-407.78z"></path></svg></div>
@@ -473,7 +532,7 @@ function App() {
                       <div className="star-5"><svg xmlns="http://www.w3.org/2000/svg" xmlSpace="preserve" version="1.1" viewBox="0 0 784.11 815.53"><path className="fil0" d="M392.05 0c-20.9,210.08 -184.06,378.41 -392.05,407.78 207.96,29.37 371.12,197.68 392.05,407.74 20.93,-210.06 184.09,-378.37 392.05,-407.74 -207.98,-29.38 -371.16,-197.69 -392.06,-407.78z"></path></svg></div>
                       <div className="star-6"><svg xmlns="http://www.w3.org/2000/svg" xmlSpace="preserve" version="1.1" viewBox="0 0 784.11 815.53"><path className="fil0" d="M392.05 0c-20.9,210.08 -184.06,378.41 -392.05,407.78 207.96,29.37 371.12,197.68 392.05,407.74 20.93,-210.06 184.09,-378.37 392.05,-407.74 -207.98,-29.38 -371.16,-197.69 -392.06,-407.78z"></path></svg></div>
                     </button>
-                    <button type="submit" className="button-submit">
+                    <button type="submit" className="button-submit"> 
                       <div className="svg-wrapper-1"><div className="svg-wrapper"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="24" height="24"><path fill="none" d="M0 0h24v24H0z"></path><path fill="currentColor" d="M1.946 9.315c-.522-.174-.527-.455.01-.634l19.087-6.362c.529-.176.832.12.684.638l-5.454 19.086c-.15.529-.455.547-.679.045L12 14l6-8-8 6-8.054-2.685z"></path></svg></div></div>
                       <span>Submit</span>
                     </button>
@@ -497,115 +556,120 @@ function App() {
             </div>
           </section>
 
-         {/* 5. About Section (Vision) with Video Background */}
-<section id="about" className="relative py-16 text-white overflow-hidden">
-  
-  {/* Background Video and Overlay */}
-  <div className="absolute inset-0 z-0">
-    <video 
-      autoPlay
-      loop
-      muted
-      playsInline
-      className="w-full h-full object-cover"
-    >
-      <source src="/videos/about3.mp4" type="video/mp4" />
-    </video>
-    <div className="absolute inset-0 bg-black opacity-60"></div>
-  </div>
-
-  {/* Content */}
-  <div className="container mx-auto px-4 relative z-10">
-    <div className="max-w-4xl mx-auto text-center">
-      <h2 className="text-4xl font-bold text-white mb-8">
-        Why Choose Us?
-      </h2>
-      <p className="text-xl text-gray-200 leading-relaxed mb-8">
-        At SmartgenAI Innovations, we combine the power of artificial intelligence with a strong commitment to security to build websites that not only meet but exceed your business's needs. While AI drives the development process, ensuring efficiency and innovation, we prioritize robust security measures to protect your website and users at every stage.
-      </p>
-      <p className="text-xl text-gray-200 leading-relaxed mb-8">
-        Our intelligent, AI-powered solutions are designed to offer seamless user experiences, optimize for search engines, and drive higher conversion rates. But what truly sets us apart is our unwavering focus on security. From the development stage to deployment, we ensure that your site remains secure, protecting both your business and your customers' data from potential threats.
-      </p>
-      <p className="text-xl text-gray-200 leading-relaxed mb-8">
-        We believe the future of web development lies in AI, but it’s security that ensures longevity and trust. That’s why, at SmartgenAI, we don’t just build websites; we build safe, scalable, and smart websites that grow with your business.
-      </p>
-      <button 
-        onClick={() => setCurrentPage('about-founder')}
-        className="bg-blue-600 text-white font-bold py-3 px-8 rounded-full hover:bg-blue-700 transition-colors"
-      >
-        About the Founder
-      </button>
-    </div>
-  </div>
-</section>
+          {/* 5. About Section (Vision) with Video Background */}
+          <section
+            id="about"
+            className="relative py-16 text-white overflow-hidden"
+          >
+            <div className="absolute inset-0 z-0">
+              <video
+                autoPlay
+                loop
+                muted
+                playsInline
+                className="w-full h-full object-cover"
+              >
+                <source src="/videos/about3.mp4" type="video/mp4" />
+              </video>
+              <div className="absolute inset-0 bg-black opacity-60"></div>
+            </div>
+            <div className="container mx-auto px-4 relative z-10">
+              <div className="max-w-4xl mx-auto text-center">
+                <h2 className="text-4xl font-bold text-white mb-8">
+                  Why Choose Us?
+                </h2>
+                <p className="text-xl text-gray-200 leading-relaxed mb-8">
+                  At SmartgenAI Innovations, we combine the power of artificial
+                  intelligence with a strong commitment to security to build
+                  websites that not only meet but exceed your business's needs.
+                  While AI drives the development process, ensuring efficiency
+                  and innovation, we prioritize robust security measures to
+                  protect your website and users at every stage.
+                </p>
+                <p className="text-xl text-gray-200 leading-relaxed mb-8">
+                  Our intelligent, AI-powered solutions are designed to offer
+                  seamless user experiences, optimize for search engines, and
+                  drive higher conversion rates. But what truly sets us apart is
+                  our unwavering focus on security. From the development stage
+                  to deployment, we ensure that your site remains secure,
+                  protecting both your business and your customers' data from
+                  potential threats.
+                </p>
+                <p className="text-xl text-gray-200 leading-relaxed mb-8">
+                  We believe the future of web development lies in AI, but it’s
+                  security that ensures longevity and trust. That’s why, at
+                  SmartgenAI, we don’t just build websites; we build safe,
+                  scalable, and smart websites that grow with your business.
+                </p>
+                <button
+                  onClick={() => setCurrentPage("about-founder")}
+                  className="bg-blue-600 text-white font-bold py-3 px-8 rounded-full hover:bg-blue-700 transition-colors"
+                >
+                  About the Founder
+                </button>
+              </div>
+            </div>
+          </section>
 
           {/* 6. Footer */}
-<footer className="bg-gray-900 text-white py-12">
-  <div className="container mx-auto px-4">
-    {/* This grid is now responsive */}
-    <div className="grid md:grid-cols-3 gap-8 mb-8 text-center md:text-left">
-      
-      {/* Column 1: Company Info */}
-      <div>
-        <div className="flex items-center justify-center md:justify-start space-x-2 mb-4">
-          <span className="text-lg font-bold">
-            SmartgenAI Innovations
-          </span>
-        </div>
-        <p className="text-gray-400">
-          Pioneering AI-driven web development for the future.
-        </p>
-      </div>
-
-      {/* Column 2: Quick Links */}
-      <div>
-        <h3 className="text-lg font-semibold mb-4 text-center">
-          Quick Links
-        </h3>
-        <div className="flex items-start justify-center gap-16">
-          <div className="space-y-2">
-            {["Home", "Services", "Pricing"].map((item) => (
-              <button
-                key={item}
-                onClick={() => scrollToSection(item.toLowerCase())}
-                className="block text-gray-400 hover:text-white transition-colors duration-200 text-left"
-              >
-                {item}
-              </button>
-            ))}
-          </div>
-          <div className="space-y-2">
-            {["Contact", "About"].map((item) => (
-              <button
-                key={item}
-                onClick={() => scrollToSection(item.toLowerCase())}
-                className="block text-gray-400 hover:text-white transition-colors duration-200 text-left"
-              >
-                {item}
-              </button>
-            ))}
-          </div>
-        </div>
-      </div>
-
-      {/* Column 3: Made in India */}
-      <div>
-        <h3 className="text-lg font-semibold mb-4">
-          Made with ❤️ in India
-        </h3>
-        <p className="text-gray-400">
-          Bringing AI innovation to businesses worldwide.
-        </p>
-      </div>
-    </div>
-    
-    <div className="border-t border-gray-800 pt-8 text-center">
-      <p className="text-gray-400">
-        Copyright © 2025 SmartgenAI Innovations. All rights reserved.
-      </p>
-    </div>
-  </div>
-</footer>
+          <footer className="bg-gray-900 text-white py-12">
+            <div className="container mx-auto px-4">
+              <div className="grid md:grid-cols-3 gap-8 mb-8 text-center md:text-left">
+                <div>
+                  <div className="flex items-center justify-center md:justify-start space-x-2 mb-4">
+                    <span className="text-lg font-bold">
+                      SmartgenAI Innovations
+                    </span>
+                  </div>
+                  <p className="text-gray-400">
+                    Pioneering AI-driven web development for the future.
+                  </p>
+                </div>
+                <div>
+                  <h3 className="text-lg font-semibold mb-4 text-center">
+                    Quick Links
+                  </h3>
+                  <div className="flex items-start justify-center gap-16">
+                    <div className="space-y-2">
+                      {["Home", "Services", "Pricing"].map((item) => (
+                        <button
+                          key={item}
+                          onClick={() => scrollToSection(item.toLowerCase())}
+                          className="block text-gray-400 hover:text-white transition-colors duration-200 text-left"
+                        >
+                          {item}
+                        </button>
+                      ))}
+                    </div>
+                    <div className="space-y-2">
+                      {["Contact", "About"].map((item) => (
+                        <button
+                          key={item}
+                          onClick={() => scrollToSection(item.toLowerCase())}
+                          className="block text-gray-400 hover:text-white transition-colors duration-200 text-left"
+                        >
+                          {item}
+                        </button>
+                      ))}
+                    </div>
+                  </div>
+                </div>
+                <div>
+                  <h3 className="text-lg font-semibold mb-4">
+                    Made with ❤️ in India
+                  </h3>
+                  <p className="text-gray-400">
+                    Bringing AI innovation to businesses worldwide.
+                  </p>
+                </div>
+              </div>
+              <div className="border-t border-gray-800 pt-8 text-center">
+                <p className="text-gray-400">
+                  Copyright © 2025 SmartgenAI Innovations. All rights reserved.
+                </p>
+              </div>
+            </div>
+          </footer>
         </div>
       );
   }
