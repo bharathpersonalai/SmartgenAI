@@ -77,40 +77,54 @@ function App() {
     }, 300);
   };
 
-  // --- NEW CODE: FORM SUBMISSION HANDLER ---
   const handleFormSubmit = (event: React.FormEvent<HTMLFormElement>) => {
-    event.preventDefault(); // This stops the page from reloading
-    const form = event.currentTarget;
-    const formData = new FormData(form);
-    
-    // 👇 PASTE YOUR GOOGLE SCRIPT URL HERE 👇
-    const scriptURL = 'https://script.google.com/macros/s/AKfycbw27zzbuovIlWSSx-yHDDceXH-BRBOXhHqN18HRQV57vBXKTZBay7IZcr4hnB9qj_Tpiw/exec';
+  event.preventDefault(); // Prevent page reload
 
-    // Show a "sending..." toast message
-    const promise = fetch(scriptURL, { method: 'POST', body: formData });
+  const form = event.currentTarget;
 
-    toast.promise(
-      promise,
-      {
-        loading: 'Sending message...',
-        success: <b>Message sent successfully!</b>,
-        error: <b>Could not send message.</b>,
-      },
-      {
-        position: "top-right",
-        success: {
-          style: {
-            background: '#4ade80', // green color
-            color: '#ffffff',
-          },
+  // Extracting the form data and converting it to JSON
+  const formData = new FormData(form);
+  const formObject: any = {};
+  
+  formData.forEach((value, key) => {
+    formObject[key] = value;
+  });
+
+  // 👇 PASTE YOUR GOOGLE SCRIPT URL HERE 👇
+  const scriptURL = 'https://script.google.com/macros/s/AKfycbw27zzbuovIlWSSx-yHDDceXH-BRBOXhHqN18HRQV57vBXKTZBay7IZcr4hnB9qj_Tpiw/exec';
+
+  // Show a "sending..." toast message
+  const promise = fetch(scriptURL, {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json', // Send JSON data
+    },
+    body: JSON.stringify(formObject), // Convert form data to JSON
+  });
+
+  toast.promise(
+    promise,
+    {
+      loading: 'Sending message...',
+      success: <b>Message sent successfully!</b>,
+      error: <b>Could not send message.</b>,
+    },
+    {
+      position: "top-right",
+      success: {
+        style: {
+          background: '#4ade80', // green color
+          color: '#ffffff',
         },
-      }
-    );
+      },
+    }
+  );
 
-    promise.then(() => {
-      form.reset(); // Clear the form only on success
-    });
-  };
+  promise.then(() => {
+    form.reset(); // Clear the form on success
+  });
+};
+
 
   useEffect(() => {
     if (stage === "main") {
@@ -533,7 +547,7 @@ function App() {
                   <div className="flex flex-col sm:flex-row sm:justify-between items-center gap-4">
                     <button
                       type="button"
-                      className="button-ai w-full sm:w-auto"
+                      className="button-ai"
                     >
                       Draft with AI
                       <div className="star-1">
@@ -617,7 +631,7 @@ function App() {
                     </button>
                     <button
                       type="submit"
-                      className="button-submit w-full sm:w-auto"
+                      className="button-submit"
                     >
                       <div className="svg-wrapper-1">
                         <div className="svg-wrapper">
