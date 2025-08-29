@@ -81,23 +81,24 @@ function App() {
     event.preventDefault();
     const form = event.currentTarget;
     const formData = new FormData(form);
-    
-    const scriptURL = 'https://script.google.com/macros/s/AKfycbw27zzbuovIlWSSx-yHDDceXH-BRBOXhHqN18HRQV57vBXKTZBay7IZcr4hnB9qj_Tpiw/exec'; // Make sure your URL is still here
+
+    const scriptURL =
+      "https://script.google.com/macros/s/AKfycbw27zzbuovIlWSSx-yHDDceXH-BRBOXhHqN18HRQV57vBXKTZBay7IZcr4hnB9qj_Tpiw/exec"; // Make sure your URL is still here
 
     // This new part "packages" the data correctly
     const promise = fetch(scriptURL, {
-      method: 'POST',
-      mode: 'no-cors', // This can sometimes help with Google Scripts
+      method: "POST",
+      mode: "no-cors", // This can sometimes help with Google Scripts
       headers: {
-        'Content-Type': 'application/x-www-form-urlencoded',
+        "Content-Type": "application/x-www-form-urlencoded",
       },
-      body: new URLSearchParams(formData as any).toString()
+      body: new URLSearchParams(formData as any).toString(),
     });
 
     toast.promise(
       promise,
       {
-        loading: 'Sending message...',
+        loading: "Sending message...",
         success: <b>Message sent successfully!</b>,
         error: <b>Could not send message.</b>,
       },
@@ -105,8 +106,8 @@ function App() {
         position: "top-right",
         success: {
           style: {
-            background: '#4ade80',
-            color: '#ffffff',
+            background: "#4ade80",
+            color: "#ffffff",
           },
         },
       }
@@ -116,7 +117,6 @@ function App() {
       form.reset();
     });
   };
-
 
   useEffect(() => {
     if (stage === "main") {
@@ -419,9 +419,11 @@ function App() {
                 ].map((plan, index) => (
                   <div
                     key={index}
-                    className={`relative bg-white p-8 rounded-2xl shadow-lg hover:shadow-xl transform hover:-translate-y-2 transition-all duration-300 ${
+                    className={`relative bg-white p-8 rounded-2xl shadow-lg hover:shadow-xl transform hover:-translate-y-2 hover:scale-105 transition-all duration-300 flex flex-col ${
+                      // --- CHANGE 1: REMOVED THE BLUE RING ---
+                      // The blue ring class has been replaced with the standard border
                       plan.popular
-                        ? "ring-2 ring-blue-600"
+                        ? "border border-gray-200"
                         : "border border-gray-200"
                     }`}
                   >
@@ -453,7 +455,7 @@ function App() {
                         </span>
                       )}
                     </div>
-                    <ul className="space-y-3 mb-8">
+                    <ul className="space-y-3 mb-8 flex-grow">
                       {plan.features.map((feature, featureIndex) => (
                         <li key={featureIndex} className="flex items-center">
                           <div className="w-2 h-2 bg-blue-600 rounded-full mr-3 flex-shrink-0"></div>
@@ -464,8 +466,10 @@ function App() {
                     <button
                       onClick={() => handleWhatsAppRedirect(plan)}
                       className={`w-full py-3 rounded-lg font-semibold transition-all duration-200 ${
+                        // --- CHANGE 2: REMOVED THE BLUE BUTTON ---
+                        // The blue gradient button is now replaced with the standard gray one
                         plan.popular
-                          ? "bg-gradient-to-r from-blue-600 to-purple-600 text-white hover:from-blue-700 hover:to-purple-700 shadow-lg hover:shadow-xl"
+                          ? "bg-gray-100 text-gray-900 hover:bg-gray-200"
                           : "bg-gray-100 text-gray-900 hover:bg-gray-200"
                       }`}
                     >
@@ -537,10 +541,7 @@ function App() {
                     ></textarea>
                   </div>
                   <div className="flex flex-col sm:flex-row sm:justify-between items-center gap-4">
-                    <button
-                      type="button"
-                      className="button-ai"
-                    >
+                    <button type="button" className="button-ai">
                       Draft with AI
                       <div className="star-1">
                         <svg
@@ -621,10 +622,7 @@ function App() {
                         </svg>
                       </div>
                     </button>
-                    <button
-                      type="submit"
-                      className="button-submit"
-                    >
+                    <button type="submit" className="button-submit">
                       <div className="svg-wrapper-1">
                         <div className="svg-wrapper">
                           <svg
