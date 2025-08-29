@@ -78,52 +78,44 @@ function App() {
   };
 
   const handleFormSubmit = (event: React.FormEvent<HTMLFormElement>) => {
-  event.preventDefault(); // Prevent page reload
+    event.preventDefault();
+    const form = event.currentTarget;
+    const formData = new FormData(form);
+    
+    const scriptURL = 'https://script.google.com/macros/s/AKfycbw27zzbuovIlWSSx-yHDDceXH-BRBOXhHqN18HRQV57vBXKTZBay7IZcr4hnB9qj_Tpiw/exec'; // Make sure your URL is still here
 
-  const form = event.currentTarget;
-
-  // Extracting the form data and converting it to JSON
-  const formData = new FormData(form);
-  const formObject: any = {};
-  
-  formData.forEach((value, key) => {
-    formObject[key] = value;
-  });
-
-  // 👇 PASTE YOUR GOOGLE SCRIPT URL HERE 👇
-  const scriptURL = 'https://script.google.com/macros/s/AKfycbw27zzbuovIlWSSx-yHDDceXH-BRBOXhHqN18HRQV57vBXKTZBay7IZcr4hnB9qj_Tpiw/exec';
-
-  // Show a "sending..." toast message
-  const promise = fetch(scriptURL, {
-    method: 'POST',
-    headers: {
-      'Content-Type': 'application/json', // Send JSON data
-    },
-    body: JSON.stringify(formObject), // Convert form data to JSON
-  });
-
-  toast.promise(
-    promise,
-    {
-      loading: 'Sending message...',
-      success: <b>Message sent successfully!</b>,
-      error: <b>Could not send message.</b>,
-    },
-    {
-      position: "top-right",
-      success: {
-        style: {
-          background: '#4ade80', // green color
-          color: '#ffffff',
-        },
+    // This new part "packages" the data correctly
+    const promise = fetch(scriptURL, {
+      method: 'POST',
+      mode: 'no-cors', // This can sometimes help with Google Scripts
+      headers: {
+        'Content-Type': 'application/x-www-form-urlencoded',
       },
-    }
-  );
+      body: new URLSearchParams(formData as any).toString()
+    });
 
-  promise.then(() => {
-    form.reset(); // Clear the form on success
-  });
-};
+    toast.promise(
+      promise,
+      {
+        loading: 'Sending message...',
+        success: <b>Message sent successfully!</b>,
+        error: <b>Could not send message.</b>,
+      },
+      {
+        position: "top-right",
+        success: {
+          style: {
+            background: '#4ade80',
+            color: '#ffffff',
+          },
+        },
+      }
+    );
+
+    promise.then(() => {
+      form.reset();
+    });
+  };
 
 
   useEffect(() => {
