@@ -192,7 +192,7 @@ function App() {
               <div className="text-center mt-[30rem]">
                 <button
                   // onClick={handleGiveAccess}
-                  className="bg-gradient-to-r from-cyan-500 via-blue-600 to-purple-700 text-white px-12 py-4 rounded-full text-xl font-bold hover:from-cyan-400 hover:via-blue-500 hover:to-purple-600 transform hover:scale-110 transition-all duration-300 shadow-2xl hover:shadow-cyan-500/25 animate-fall-left-right"
+                  className="bg-gradient-to-r from-cyan-500 via-blue-600 to-purple-700 text-white px-6 py-2 rounded-full text-sm font-bold hover:from-cyan-400 hover:via-blue-500 hover:to-purple-600 transform hover:scale-110 transition-all duration-300 shadow-2xl hover:shadow-cyan-500/25 animate-fall-left-right"
                   style={{ animationDelay: "1s" }}
                 >
                   Website under AI construction / the future is building itself !
