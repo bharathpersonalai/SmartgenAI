@@ -140,10 +140,9 @@ function App() {
             }}
           >
             <img
-              src="/images/logo5.png"
+              src="/images/logo6.png"
               alt="SmartgenAI Innovations Logo"
-              className="w-[16rem] h-[16rem]" // You can adjust the size here
-              style={{ marginTop: "12px", marginLeft: "-30px" }}
+              className="h-12 w-auto"
             />
           </a>
 
@@ -156,10 +155,12 @@ function App() {
         </div>
       </header>
       <main className="container mx-auto px-4 py-16">
-        <h1 className="text-4xl font-bold mb-4">Founder Page under AI construction, Stay Tuned !</h1>
-       <video width="100%" height="auto" controls autoPlay loop>
-        <source src="/videos/into_video.mp4" type="video/mp4" />
-      </video>
+        <h1 className="text-4xl font-bold mb-4">
+          Founder Page under AI construction, Stay Tuned !
+        </h1>
+        <video width="100%" height="auto" controls autoPlay loop>
+          <source src="/videos/into_video.mp4" type="video/mp4" />
+        </video>
         {/* <p className="mb-8 text-gray-600">
           This is where you can add the founder's bio, portfolio, achievements,
           and other relevant info.
@@ -187,14 +188,14 @@ function App() {
               className="absolute top-1/2 left-1/2 w-full h-full object-cover transform -translate-x-1/2 -translate-y-1/2"
             >
               <source
-                src="/videos/Robot_Animation_Request_Fulfilled.mp4" 
+                src="/videos/Robot_Animation_Request_Fulfilled.mp4"
                 type="video/mp4"
               />
             </video>
             <div className="relative z-10 flex justify-center h-screen">
               <div className="text-center mt-[30rem]">
                 <button
-                  onClick={handleGiveAccess}   
+                  onClick={handleGiveAccess}
                   className="bg-gradient-to-r from-cyan-500 via-blue-600 to-purple-700 text-white px-6 py-2 rounded-full text-lg font-bold hover:from-cyan-400 hover:via-blue-500 hover:to-purple-600 transform hover:scale-110 transition-all duration-300 shadow-2xl hover:shadow-cyan-500/25 animate-fall-left-right"
                   style={{ animationDelay: "1s" }}
                 >
@@ -238,10 +239,9 @@ function App() {
                     }}
                   >
                     <img
-                      src="/images/logo5.png"
+                      src="/images/logo6.png"
                       alt="SmartgenAI Innovations Logo"
-                      className="w-[16rem] h-[16rem]"
-                      style={{ marginTop: "12px", marginLeft: "-30px" }}
+                      className="h-12 w-auto" // Changed: Height set to 48px (3rem), width auto to maintain aspect ratio
                     />
                   </a>
                 </div>
@@ -367,137 +367,142 @@ function App() {
           </section>
 
           {/* 3. Pricing Section */}
-          <section id="pricing" className="py-24 px-6 lg:px-8 bg-stone-50 dark:bg-slate-950">
-  <div className="container mx-auto px-4">
-    <div className="text-center mb-20">
-      <h2 className="text-5xl sm:text-6xl font-light mb-6 text-stone-800 dark:text-stone-200">
-        AI-Powered Pricing
-      </h2>
-      <p className="text-xl text-stone-600 dark:text-stone-400 max-w-2xl mx-auto font-light">
-        Revolutionary AI technology at unbeatable prices
-      </p>
-    </div>
-    
-    {/* Updated grid for 4 items */}
-    <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8 max-w-7xl mx-auto">
-      {[
-        // CARD 1: PERSONAL PORTFOLIO (NEW)
-        {
-          name: "Professional Portfolio Website", 
-          price: "₹499",
-          originalPrice: "₹1500",
-          features: [
-            "Up to 3 pages",
-            "Fully responsive design",
-            "Mobile friendly",
-            "Social media links", 
-            "Contact us for more details",
-          ],
-          discountPercentage: 65,
-        },
-        // CARD 2: AI STANDARD
-        {
-          name: "AI Standard",
-          price: "₹999",
-          originalPrice: "₹5,000",
-          features: [
-            "Up to 5 pages (Home, Services, Gallery, About, Contact)",
-            "Responsive design (mobile + tablet + desktop)",
-            "SEO Setup (meta tags, titles, alt text)",
-            "Social Media Links Integration",
-            "Basic Contact Form",
-          ],
-          discountPercentage: 80,
-        },
-        // CARD 3: AI PROFESSIONAL (FEATURED)
-        {
-          name: "AI Professional",
-          price: "₹2,999",
-          originalPrice: "₹8,000",
-          discountPercentage: 63,
-          features: [
-            "Everything in AI Standard",
-            "Extra Gallery Images",
-            "2 months free web hosting",
-            "Chatgpt/Gemini AI Integration",
-            "Priority Support",
-          ],
-          popular: true,
-        },
-        // CARD 4: AI ENTERPRISE
-        {
-          name: "AI Enterprise",
-          price: "Contact Us",
-          originalPrice: null,
-          features: [
-            "Custom AI Web Application",
-            "Advanced AI Features",
-            "AI Database Integration",
-            "1 Year AI Support",
-            "AI Admin Dashboard",
-            "AI Payment Gateway",
-          ],
-        },
-      ].map((plan, index) => (
-        <div
-          key={index}
-          className={`relative bg-white dark:bg-slate-900 p-8 rounded-3xl shadow-lg hover:shadow-xl transform hover:-translate-y-2 hover:scale-105 transition-all duration-300 flex flex-col border ${
-            plan.popular
-              ? "border-cyan-500"
-              : "border-stone-200 dark:border-slate-800"
-          }`}
-        >
-          {plan.popular && (
-            <div className="absolute -top-4 left-1/2 transform -translate-x-1/2">
-              <span className="bg-gradient-to-r from-cyan-500 to-blue-600 text-white px-4 py-2 rounded-full text-sm font-semibold flex items-center">
-                <Star className="w-4 h-4 mr-1" />
-                AI Powered
-              </span>
-            </div>
-          )}
-          <h3 className="text-2xl font-bold text-gray-900 dark:text-stone-200 mb-4">
-            {plan.name}
-          </h3>
-          <div className="mb-6">
-            <div className="flex items-baseline">
-              <span className="text-3xl font-bold text-cyan-500">
-                {plan.price}
-              </span>
-              {plan.originalPrice && (
-                <span className="ml-2 text-lg text-gray-400 dark:text-gray-500 line-through">
-                  {plan.originalPrice}
-                </span>
-              )}
-            </div>
-            {plan.discountPercentage && (
-              <span className="text-green-600 text-sm font-semibold">
-                {plan.discountPercentage}% OFF
-              </span>
-            )}
-          </div>
-          <ul className="space-y-3 mb-8 flex-grow">
-            {plan.features.map((feature, featureIndex) => (
-              <li key={featureIndex} className="flex items-start">
-                <div className="w-2 h-2 bg-cyan-500 rounded-full mr-3 mt-2 flex-shrink-0"></div>
-                <span className="text-gray-600 dark:text-stone-400">{feature}</span>
-              </li>
-            ))}
-          </ul>
-          <button
-            onClick={() => handleWhatsAppRedirect(plan)}
-            className={`w-full py-3 rounded-lg font-semibold transition-all duration-200 ${
-              plan.popular
-                ? "bg-stone-800 hover:bg-stone-700 text-stone-100 dark:bg-cyan-500 dark:hover:bg-cyan-600 dark:text-white"
-                : "bg-stone-100 text-stone-800 hover:bg-stone-200 dark:bg-slate-800 dark:text-stone-300 dark:hover:bg-slate-700"
-            }`}
+          <section
+            id="pricing"
+            className="py-24 px-6 lg:px-8 bg-stone-50 dark:bg-slate-950"
           >
-            Contact now
-          </button>
-        </div>
-      ))}
-    </div>
-  </div>
-</section>
+            <div className="container mx-auto px-4">
+              <div className="text-center mb-20">
+                <h2 className="text-5xl sm:text-6xl font-light mb-6 text-stone-800 dark:text-stone-200">
+                  AI-Powered Pricing
+                </h2>
+                <p className="text-xl text-stone-600 dark:text-stone-400 max-w-2xl mx-auto font-light">
+                  Revolutionary AI technology at unbeatable prices
+                </p>
+              </div>
+
+              {/* Updated grid for 4 items */}
+              <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8 max-w-7xl mx-auto">
+                {[
+                  // CARD 1: PERSONAL PORTFOLIO (NEW)
+                  {
+                    name: "Professional Portfolio Website",
+                    price: "₹499",
+                    originalPrice: "₹1500",
+                    features: [
+                      "Up to 3 pages",
+                      "Fully responsive design",
+                      "Mobile friendly",
+                      "Social media links",
+                      "Contact us for more details",
+                    ],
+                    discountPercentage: 65,
+                  },
+                  // CARD 2: AI STANDARD
+                  {
+                    name: "AI Standard",
+                    price: "₹999",
+                    originalPrice: "₹5,000",
+                    features: [
+                      "Up to 5 pages (Home, Services, Gallery, About, Contact)",
+                      "Responsive design (mobile + tablet + desktop)",
+                      "SEO Setup (meta tags, titles, alt text)",
+                      "Social Media Links Integration",
+                      "Basic Contact Form",
+                    ],
+                    discountPercentage: 80,
+                  },
+                  // CARD 3: AI PROFESSIONAL (FEATURED)
+                  {
+                    name: "AI Professional",
+                    price: "₹2,999",
+                    originalPrice: "₹8,000",
+                    discountPercentage: 63,
+                    features: [
+                      "Everything in AI Standard",
+                      "Extra Gallery Images",
+                      "2 months free web hosting",
+                      "Chatgpt/Gemini AI Integration",
+                      "Priority Support",
+                    ],
+                    popular: true,
+                  },
+                  // CARD 4: AI ENTERPRISE
+                  {
+                    name: "AI Enterprise",
+                    price: "Contact Us",
+                    originalPrice: null,
+                    features: [
+                      "Custom AI Web Application",
+                      "Advanced AI Features",
+                      "AI Database Integration",
+                      "1 Year AI Support",
+                      "AI Admin Dashboard",
+                      "AI Payment Gateway",
+                    ],
+                  },
+                ].map((plan, index) => (
+                  <div
+                    key={index}
+                    className={`relative bg-white dark:bg-slate-900 p-8 rounded-3xl shadow-lg hover:shadow-xl transform hover:-translate-y-2 hover:scale-105 transition-all duration-300 flex flex-col border ${
+                      plan.popular
+                        ? "border-cyan-500"
+                        : "border-stone-200 dark:border-slate-800"
+                    }`}
+                  >
+                    {plan.popular && (
+                      <div className="absolute -top-4 left-1/2 transform -translate-x-1/2">
+                        <span className="bg-gradient-to-r from-cyan-500 to-blue-600 text-white px-4 py-2 rounded-full text-sm font-semibold flex items-center">
+                          <Star className="w-4 h-4 mr-1" />
+                          AI Powered
+                        </span>
+                      </div>
+                    )}
+                    <h3 className="text-2xl font-bold text-gray-900 dark:text-stone-200 mb-4">
+                      {plan.name}
+                    </h3>
+                    <div className="mb-6">
+                      <div className="flex items-baseline">
+                        <span className="text-3xl font-bold text-cyan-500">
+                          {plan.price}
+                        </span>
+                        {plan.originalPrice && (
+                          <span className="ml-2 text-lg text-gray-400 dark:text-gray-500 line-through">
+                            {plan.originalPrice}
+                          </span>
+                        )}
+                      </div>
+                      {plan.discountPercentage && (
+                        <span className="text-green-600 text-sm font-semibold">
+                          {plan.discountPercentage}% OFF
+                        </span>
+                      )}
+                    </div>
+                    <ul className="space-y-3 mb-8 flex-grow">
+                      {plan.features.map((feature, featureIndex) => (
+                        <li key={featureIndex} className="flex items-start">
+                          <div className="w-2 h-2 bg-cyan-500 rounded-full mr-3 mt-2 flex-shrink-0"></div>
+                          <span className="text-gray-600 dark:text-stone-400">
+                            {feature}
+                          </span>
+                        </li>
+                      ))}
+                    </ul>
+                    <button
+                      onClick={() => handleWhatsAppRedirect(plan)}
+                      className={`w-full py-3 rounded-lg font-semibold transition-all duration-200 ${
+                        plan.popular
+                          ? "bg-stone-800 hover:bg-stone-700 text-stone-100 dark:bg-cyan-500 dark:hover:bg-cyan-600 dark:text-white"
+                          : "bg-stone-100 text-stone-800 hover:bg-stone-200 dark:bg-slate-800 dark:text-stone-300 dark:hover:bg-slate-700"
+                      }`}
+                    >
+                      Contact now
+                    </button>
+                  </div>
+                ))}
+              </div>
+            </div>
+          </section>
 
           {/* 4. Contact Section */}
           <section
@@ -744,7 +749,13 @@ function App() {
                   Why Choose Us?
                 </h2>
                 <p className="text-xl text-gray-200 leading-relaxed mb-8">
-                  SmartgenAI Innovations combines AI-driven web development with top-tier security to deliver websites that exceed your business's needs. Our intelligent solutions ensure a seamless user experience, SEO and GEO  optimization, and high conversion rates, while robust security protects your data at every stage. Whether you’re a startup or an established brand, we create secure, scalable websites that grow with your business.
+                  SmartgenAI Innovations combines AI-driven web development with
+                  top-tier security to deliver websites that exceed your
+                  business's needs. Our intelligent solutions ensure a seamless
+                  user experience, SEO and GEO optimization, and high conversion
+                  rates, while robust security protects your data at every
+                  stage. Whether you’re a startup or an established brand, we
+                  create secure, scalable websites that grow with your business.
                 </p>
                 <button
                   onClick={() => setCurrentPage("about-founder")}
