@@ -1,6 +1,7 @@
 import React, { useState, useRef, useEffect } from "react";
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import { Toaster } from "react-hot-toast";
+import ScrollToTop from "./components/ScrollToTop"; 
 
 // Import your page components
 import HomePage from "./pages/Home";
@@ -74,6 +75,7 @@ function App() {
   // Once the animation is complete, render the router and pages
   return (
     <Router>
+      <ScrollToTop /> 
       <Toaster />
       <Routes>
         <Route path="/" element={<HomePage />} />
