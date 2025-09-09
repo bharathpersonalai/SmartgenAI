@@ -11,7 +11,7 @@ const About = () => {
       {/* 5. About Section (Vision) with Video Background */}
       <section
         id="about"
-        className="relative py-16 text-white overflow-hidden"
+        className="relative py-24 text-white overflow-hidden"
       >
         <div className="absolute inset-0 z-0">
           <video

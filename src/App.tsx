@@ -45,7 +45,7 @@ function App() {
         <div className="relative z-10 flex justify-center h-screen">
           <div className="text-center mt-[30rem]">
             <button
-              // onClick={handleGiveAccess}
+               onClick={handleGiveAccess}
               className="bg-gradient-to-r from-cyan-500 via-blue-600 to-purple-700 text-white px-6 py-2 rounded-full text-lg font-bold hover:from-cyan-400 hover:via-blue-500 hover:to-purple-600 transform hover:scale-110 transition-all duration-300 shadow-2xl hover:shadow-cyan-500/25 animate-fall-left-right"
               style={{ animationDelay: "1s" }}
             >
