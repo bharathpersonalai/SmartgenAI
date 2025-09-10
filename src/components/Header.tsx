@@ -33,6 +33,7 @@ const Header = () => {
               <Link
                 key={item.name}
                 to={item.path}
+                onClick={() => window.scrollTo(0, 0)} // Scroll to top on click
                 className="text-gray-700 hover:text-blue-600 font-medium transition-colors duration-200"
               >
                 {item.name}
@@ -58,7 +59,10 @@ const Header = () => {
               <Link
                 key={item.name}
                 to={item.path}
-                onClick={() => setIsMenuOpen(false)} // Close menu on click
+                onClick={() => {
+                  setIsMenuOpen(false); // First, close the menu
+                  window.scrollTo(0, 0); // Then, scroll to the top
+                }}
                 className="block w-full text-left py-4 px-6 text-gray-700 hover:bg-gray-50 border-b border-gray-100 font-medium text-lg transition-colors duration-200"
               >
                 {item.name}

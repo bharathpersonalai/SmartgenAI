@@ -12,6 +12,6 @@ const ScrollToTop = () => {
   }, [pathname]);
 
   return null; // This component does not render anything
-};
+}; 
  
 export default ScrollToTop;
