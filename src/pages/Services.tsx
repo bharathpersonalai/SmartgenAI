@@ -53,6 +53,58 @@ const Services = () => {
           </div>
         </div>
       </section>
+      {/* ======================================================= */}
+      {/* == START: Updated "Technology Stack" Section == */}
+      {/* ======================================================= */}
+      <section id="tech-stack" className="py-20 bg-white">
+        <div className="container mx-auto">
+          <div className="text-center mb-12 px-4">
+            <h2 className="text-4xl font-bold text-gray-900 mb-4">
+              Engineered with Generative AI Technology for Powerful, Scalable Solutions
+            </h2>
+            <p className="text-xl text-gray-600 max-w-2xl mx-auto">
+              Our solutions leverage the latest in generative AI to deliver high-performance, innovative, and adaptive technology tailored to your business needs.
+            </p>
+          </div>
+          
+          <div className="tech-marquee">
+            <div className="tech-marquee__inner">
+              {/* Data is now an array of objects with your specific logos */}
+              {[
+                { name: "ChatGPT", logoUrl: "/images/Chatgpt.png" },
+                { name: "Gemini", logoUrl: "/images/Gemini.png" },
+                { name: "Canva", logoUrl: "/images/canva.png" },
+                { name: "GitHub", logoUrl: "/images/Github.png" },
+                { name: "Uiverse", logoUrl: "/images/Uiverse.png" },
+                { name: "Netlify", logoUrl: "/images/Netlify.png" },
+                { name: "Lovable", logoUrl: "/images/Lovable.png" },
+                { name: "VS Code", logoUrl: "/images/VS code.png" },
+              ].concat(
+                // Duplicate the array for a seamless loop
+                [
+                  { name: "ChatGPT", logoUrl: "/images/Chatgpt.png" },
+                  { name: "Gemini", logoUrl: "/images/Gemini.png" },
+                  { name: "Canva", logoUrl: "/images/canva.png" },
+                  { name: "GitHub", logoUrl: "/images/Github.png" },
+                  { name: "Uiverse", logoUrl: "/images/Uiverse.png" },
+                  { name: "Netlify", logoUrl: "/images/Netlify.png" },
+                  { name: "Lovable", logoUrl: "/images/Lovable.png" },
+                  { name: "VS Code", logoUrl: "/images/VS code.png" },
+                ]
+              ).map((tool, index) => (
+                <div key={index} className="tech-marquee__group">
+                  <div className="tech-marquee__item">
+                    <img src={tool.logoUrl} alt={`${tool.name} logo`} />
+                  </div>
+                </div>
+              ))}
+            </div>
+          </div>
+        </div>
+      </section>
+      {/* ======================================================= */}
+      {/* == END: Updated "Technology Stack" Section == */}
+      {/* ======================================================= */}
       <Footer />
     </div>
   );

@@ -34,6 +34,7 @@ const footer = () => {
                   <Link
                     key={item}
                     to={`/${item.toLowerCase()}`}
+                     onClick={() => window.scrollTo(0, 0)} // Scroll to top on click 
                     className="block text-gray-400 hover:text-white transition-colors duration-200 text-left"
                   >
                     {item}

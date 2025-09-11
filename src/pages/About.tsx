@@ -38,12 +38,12 @@ const About = () => {
               create secure, scalable websites that grow with your business.
             </p>
             {/* The button is now a Link component to the AboutFounderPage */}
-            <Link
+            {/* <Link
               to="/about-founder"
               className="bg-blue-600 text-white font-bold py-3 px-8 rounded-full hover:bg-blue-700 transition-colors"
             >
               About the Founder
-            </Link>
+            </Link> */}
           </div>
         </div>
       </section>

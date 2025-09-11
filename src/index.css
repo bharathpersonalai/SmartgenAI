@@ -385,3 +385,59 @@ body {
   }
 }
 
+/* === Infinite Scroll for Tech Stack (Logos Only, No Card) === */
+.tech-marquee {
+  overflow: hidden;
+  width: 100%;
+  -webkit-mask-image: linear-gradient(
+    to right,
+    transparent 0%,
+    black 5%,
+    black 95%,
+    transparent 100%
+  );
+  mask-image: linear-gradient(
+    to right,
+    transparent 0%,
+    black 5%,
+    black 95%,
+    transparent 100%
+  );
+}
+
+.tech-marquee__inner {
+  display: flex;
+  width: max-content;
+  animation: marquee 25s linear infinite;
+}
+
+.tech-marquee__group {
+  display: flex;
+  align-items: center;
+  padding: 0 2.5rem; /* Controls the spacing between logos */
+}
+
+/* The item container now has no visible styling */
+.tech-marquee__item {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+/* All styling is now on the image itself */
+.tech-marquee__item img {
+  height: 2.5rem; /* 40px - Controls the height of the logos */
+  width: auto;
+  opacity: 1; /* <-- CHANGED: Logos are now fully visible by default */
+}
+
+/* The hover rule has been deleted */
+
+@keyframes marquee {
+  0% {
+    transform: translateX(0);
+  }
+  100% {
+    transform: translateX(-50%);
+  }
+}

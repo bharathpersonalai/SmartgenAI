@@ -54,6 +54,7 @@ const PricingPage = () => {
         "Responsive design",
         "Basic SEO Setup",
         "Contact Form",
+        "Mobile friendly", 
       ],
     },
     {
@@ -64,14 +65,14 @@ const PricingPage = () => {
       features: [
         "Everything in AI Standard",
         "Chatgpt/Gemini AI Integration",
-        "2 months free web hosting",
+        "6 months free web hosting",
         "Priority Support",
       ],
       popular: true,
     },
     {
       name: "AI Enterprise",
-      price: "Contact Us",
+      price: "Coming Soon",
       originalPrice: null,
       description: "Custom solutions for large-scale applications.",
       features: [
