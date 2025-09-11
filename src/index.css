@@ -408,7 +408,7 @@ body {
 .tech-marquee__inner {
   display: flex;
   width: max-content;
-  animation: marquee 25s linear infinite;
+  animation: marquee 20s linear infinite;
 }
 
 .tech-marquee__group {

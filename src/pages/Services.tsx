@@ -79,6 +79,7 @@ const Services = () => {
                 { name: "Netlify", logoUrl: "/images/Netlify.png" },
                 { name: "Lovable", logoUrl: "/images/Lovable.png" },
                 { name: "VS Code", logoUrl: "/images/VS code.png" },
+                { name: "Perplexity", logoUrl: "/images/Perplexity.png" },
               ].concat(
                 // Duplicate the array for a seamless loop
                 [
@@ -90,6 +91,7 @@ const Services = () => {
                   { name: "Netlify", logoUrl: "/images/Netlify.png" },
                   { name: "Lovable", logoUrl: "/images/Lovable.png" },
                   { name: "VS Code", logoUrl: "/images/VS code.png" },
+                  {  name: "Perplexity", logoUrl: "/images/Perplexity.png" },
                 ]
               ).map((tool, index) => (
                 <div key={index} className="tech-marquee__group">
