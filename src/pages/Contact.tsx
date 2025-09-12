@@ -7,12 +7,25 @@ import toast from "react-hot-toast";
 const ContactPage = () => {
   const [activeButton, setActiveButton] = useState<number | null>(null);
 
+  // UPDATED: This function now handles the iOS navigation fix
   const handleButtonClick = (url: string, index: number) => {
-    window.open(url, "_blank");
+    // Animation logic remains the same
     setActiveButton(index);
     setTimeout(() => {
       setActiveButton(null);
     }, 300);
+
+    // iOS detection and redirect logic
+    const userAgent = window.navigator.userAgent.toLowerCase();
+    const isIOS = /iphone|ipad|ipod/.test(userAgent);
+
+    if (isIOS) {
+      // For iOS, open in the same tab to avoid the "ghost tab" issue
+      window.location.href = url;
+    } else {
+      // For all other devices, open in a new tab as expected
+      window.open(url, "_blank", "noopener,noreferrer");
+    }
   };
 
   const handleFormSubmit = (event: React.FormEvent<HTMLFormElement>) => {
@@ -80,7 +93,7 @@ const ContactPage = () => {
         <main className="flex-grow flex items-center justify-center py-24">
           <div className="container mx-auto px-4">
             {/* Glassmorphism Form Container */}
-            <div className="max-w-3xl mx-auto bg-black/30 backdrop-blur-lg rounded-2xl p-8 md:p-12 shadow-2xl">
+            <div className="max-w-3xl mx-auto bg-black/40 backdrop-blur-lg rounded-2xl p-8 md:p-12 shadow-2xl">
               <div className="text-center mb-8">
                 <h1 className="text-4xl md:text-5xl font-bold text-white mb-4">
                   Get In Touch
