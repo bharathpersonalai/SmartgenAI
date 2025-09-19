@@ -2,6 +2,8 @@
 import React from "react";
 import Header from "../components/Header";
 import Footer from "../components/Footer";
+import FallingText from '../components/FallingText'; 
+import { motion } from 'framer-motion'; // 1. Import motion
 
 const Home = () => {
   return (
@@ -9,37 +11,52 @@ const Home = () => {
       <Header />
       
       {/* 1. Welcome Section (Hero) */}
-      <section
-        id="home"
-        className="relative pt-20 pb-16 text-white overflow-hidden"
+<section
+  id="home"
+  className="relative pt-20 pb-16 text-white overflow-hidden"
+>
+  <div className="absolute inset-0 z-0">
+    <video
+      autoPlay
+      loop
+      muted
+      playsInline
+      className="w-full h-full object-cover"
+    >
+      <source src="/videos/intro_video2.mp4" type="video/mp4" />
+    </video>
+    <div className="absolute inset-0 bg-black opacity-50"></div>
+  </div>
+  <div className="container mx-auto px-4 py-16 relative z-10">
+    <div className="text-center max-w-4xl mx-auto px-4 py-8 sm:py-12 md:py-16">
+      
+      {/* 2. Change h1 to motion.h1 and add animation props */}
+      <motion.h1
+        initial={{ opacity: 0, y: -20 }}
+        animate={{ opacity: 1, y: 0 }}
+        transition={{ duration: 0.8 }}
+        className="text-4xl sm:text-5xl md:text-7xl font-bold mb-6 leading-tight"
       >
-        <div className="absolute inset-0 z-0">
-          <video
-            autoPlay
-            loop
-            muted
-            playsInline
-            className="w-full h-full object-cover"
-          >
-            <source src="/videos/intro_video2.mp4" type="video/mp4" />
-          </video>
-          <div className="absolute inset-0 bg-black opacity-50"></div>
-        </div>
-        <div className="container mx-auto px-4 py-16 relative z-10">
-          <div className="text-center max-w-4xl mx-auto px-4 py-8 sm:py-12 md:py-16">
-            <h1 className="text-4xl sm:text-5xl md:text-7xl font-bold mb-6 leading-tight">
-              Beyond Automation{" "}
-              <span className="bg-gradient-to-r from-blue-400 to-purple-400 bg-clip-text text-transparent">
-                True Innovation
-              </span>
-            </h1>
-            <p className="text-lg sm:text-xl md:text-2xl text-gray-200 mb-8 max-w-2xl mx-auto">
-              From custom web applications to intelligent automation, we
-              provide the tools your business needs to lead the future
-            </p>
-          </div>
-        </div>
-      </section>
+        Beyond Automation{" "}
+        <span className="bg-gradient-to-r from-blue-400 to-purple-400 bg-clip-text text-transparent">
+          True Innovation
+        </span>
+      </motion.h1>
+      
+<div className="text-lg sm:text-xl md:text-2xl text-gray-200 mb-8 max-w-2xl mx-auto min-h-[120px]">
+  <FallingText
+    trigger="click" // This tells the component to only fall on click
+    fontSize="1.5rem" // Add this line to control the font size
+    text="From custom websites, web applications to intelligent automation, we provide the tools your business needs to lead the future"
+    highlightWords={["custom", "websites", "intelligent", "automation", "tools"]}
+    highlightClass="highlighted" // CSS class for highlighted words 
+    gravity={0.4}
+  />
+</div>
+
+    </div>
+  </div>
+</section>
 
       {/* 2. Services Section */}
       <section id="services" className="py-16 bg-gray-50">

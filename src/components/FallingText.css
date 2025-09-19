@@ -1,0 +1,51 @@
+.falling-text-container {
+  position: relative;
+  z-index: 1;
+  width: 100%;
+  height: 100%;
+  cursor: pointer;
+  text-align: center;
+  padding-top: 2em;
+}
+
+.falling-text-target {
+  display: inline-block;
+}
+
+.word {
+  display: inline-block;
+  margin: 0 2px;
+  user-select: none;
+}
+
+.highlighted {
+  color: cyan;
+  font-weight: bold;
+}
+
+.falling-text-canvas {
+  position: absolute;
+  top: 0;
+  left: 0;
+  z-index: 0;
+}
+.falling-text-target .word {
+  color: #E5E7EB; /* This is a light gray (Tailwind's gray-200) */
+  /* Other styles for the word might be here */
+}
+
+.highlighted {
+  color: #a78bfa !important;
+  font-weight: 600;
+} 
+/* This ensures all words are a visible light gray by default */
+.initial-text .word {
+  color: #E5E7EB; /* Light Gray */
+  display: inline-block; /* Helps with spacing */
+}
+
+/* This is the rule for your highlighted words */
+.highlighted {
+  color: #a78bfa; /* Light Purple */
+  font-weight: 600;
+}
