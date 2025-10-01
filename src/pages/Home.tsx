@@ -1,25 +1,30 @@
-// src/pages/Home.tsx
 import React from "react";
 import Header from "../components/Header";
 import Footer from "../components/Footer";
 import FallingText from '../components/FallingText'; 
 import { motion } from 'framer-motion';
-import SplineScene from '../components/SplineScene'; // We only need this one background
+import SplineScene from '../components/SplineScene';
+import { useMediaQuery } from '../hooks/useMediaQuery'; // 1. Import the new hook
 
 const Home = () => {
+  // 2. Check if the screen is desktop-sized (768px is a standard breakpoint)
+  const isDesktop = useMediaQuery('(min-width: 768px)');
+
   return (
     <div>
-      {/* 1. The Spline background is now here, at the top level. */}
-      {/* It's fixed to the viewport and sits behind everything else. */}
-      <SplineScene className="fixed top-0 left-0 w-full h-full z-[-1]" />
+      {/* 3. This block now conditionally renders the background */}
+      {isDesktop ? (
+        // On DESKTOP, render the 3D Spline scene
+        <SplineScene className="fixed top-0 left-0 w-full h-full z-[-1]" />
+      ) : (
+        // On MOBILE, render a lightweight and smooth gradient
+        <div className="fixed top-0 left-0 w-full h-full z-[-1] bg-gradient-to-br from-gray-900 via-purple-900 to-slate-900" />
+      )}
 
-      {/* 2. All of your page content goes inside this main container. */}
-      {/* It has a relative position to sit on top of the fixed background. */}
+      {/* The rest of your page content remains the same */}
       <main className="relative z-10">
         <Header />
         
-        {/* Welcome Section (Hero) */}
-        {/* The background has been removed, making it transparent. */}
         <section
           id="home"
           className="relative pt-20 pb-16 text-white overflow-visible"
@@ -52,12 +57,9 @@ const Home = () => {
           </div>
         </section>
 
-        {/* Services Section */}
-        {/* The gray background is removed. The section is now transparent. */}
         <section id="services" className="py-16">
           <div className="container mx-auto px-4">
             <div className="text-center mb-12">
-              {/* Added a semi-transparent background to the text for readability */}
               <div className="inline-block bg-gray-900 bg-opacity-50 backdrop-blur-sm rounded-lg p-4">
                 <h2 className="text-4xl font-bold text-white mb-4">
                   AI-Driven Services
@@ -82,7 +84,6 @@ const Home = () => {
                   description: "We are testing powerful AI tools that will soon help businesses automate daily tasks, reduce manual work, and increase productivity. Stay tuned for launch!",
                 },
               ].map((service, index) => (
-                // Added styles to the cards for better readability on the 3D background
                 <div key={index} className="flip-card bg-white bg-opacity-80 backdrop-blur-sm rounded-lg shadow-lg">
                   <div className="flip-card-inner">
                     <div className="flip-card-front">
