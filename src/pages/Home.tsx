@@ -4,33 +4,24 @@ import Footer from "../components/Footer";
 import FallingText from '../components/FallingText'; 
 import { motion } from 'framer-motion';
 import SplineScene from '../components/SplineScene';
-import { useMediaQuery } from '../hooks/useMediaQuery'; // 1. Import the new hook
 
 const Home = () => {
-  // 2. Check if the screen is desktop-sized (768px is a standard breakpoint)
-  const isDesktop = useMediaQuery('(min-width: 768px)');
-
   return (
     <div>
-      {/* 3. This block now conditionally renders the background */}
-      {isDesktop ? (
-        // On DESKTOP, render the 3D Spline scene
-        <SplineScene className="fixed top-0 left-0 w-full h-full z-[-1]" />
-      ) : (
-        // On MOBILE, render a lightweight and smooth gradient
-        <div className="fixed top-0 left-0 w-full h-full z-[-1] bg-gradient-to-br from-gray-900 via-purple-900 to-slate-900" />
-      )}
+      {/* 1. The Spline background is now permanent for all devices. */}
+      <SplineScene className="fixed top-0 left-0 w-full h-full z-[-1]" />
 
-      {/* The rest of your page content remains the same */}
+      {/* 2. All of your page content goes inside this main container. */}
       <main className="relative z-10">
         <Header />
         
+        {/* Welcome Section (Hero) */}
         <section
           id="home"
-          className="relative pt-20 pb-16 text-white overflow-visible"
+          className="relative pt-32 pb-16 text-white overflow-visible"
         >
-          <div className="container mx-auto px-4 py-16">
-            <div className="text-center max-w-4xl mx-auto px-4 py-8 sm:py-12 md:py-16">
+          <div className="container mx-auto px-4">
+            <div className="text-center max-w-4xl mx-auto">
               <motion.h1
                 initial={{ opacity: 0, y: -20 }}
                 animate={{ opacity: 1, y: 0 }}
@@ -57,17 +48,16 @@ const Home = () => {
           </div>
         </section>
 
-        <section id="services" className="py-16">
+        {/* Services Section */}
+        <section id="services" className="relative py-16">
           <div className="container mx-auto px-4">
             <div className="text-center mb-12">
-              <div className="inline-block bg-gray-900 bg-opacity-50 backdrop-blur-sm rounded-lg p-4">
-                <h2 className="text-4xl font-bold text-white mb-4">
-                  AI-Driven Services
-                </h2>
-                <p className="text-xl text-gray-200 max-w-2xl mx-auto">
-                  Powered by artificial intelligence to deliver superior results
-                </p>
-              </div>
+              <h2 className="text-4xl font-bold text-white mb-4 backdrop-blur-sm bg-black/20 rounded-md py-2 px-4 inline-block">
+                AI-Driven Services
+              </h2>
+              <p className="text-xl text-gray-300 max-w-2xl mx-auto backdrop-blur-sm bg-black/20 rounded-md py-2 px-4">
+                Powered by artificial intelligence to deliver superior results
+              </p>
             </div>
             <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
               {[
@@ -84,15 +74,15 @@ const Home = () => {
                   description: "We are testing powerful AI tools that will soon help businesses automate daily tasks, reduce manual work, and increase productivity. Stay tuned for launch!",
                 },
               ].map((service, index) => (
-                <div key={index} className="flip-card bg-white bg-opacity-80 backdrop-blur-sm rounded-lg shadow-lg">
+                <div key={index} className="flip-card h-64">
                   <div className="flip-card-inner">
-                    <div className="flip-card-front">
+                    <div className="flip-card-front bg-white bg-opacity-80 backdrop-blur-sm">
                       <h3 className="text-2xl font-semibold text-gray-900">
                         {service.title}
                       </h3>
-                      <p className="mt-4 text-gray-500">Tap here to see more</p>
+                      <p className="mt-4 text-gray-600">Tap here to see more</p>
                     </div>
-                    <div className="flip-card-back">
+                    <div className="flip-card-back bg-gradient-to-br from-blue-500 to-purple-600">
                       <p className="text-white">{service.description}</p>
                     </div>
                   </div>
