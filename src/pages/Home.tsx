@@ -40,6 +40,7 @@ const Home = () => {
         
         <section
           id="home"
+
         >
            <div className="container mx-auto px-4">
               <div className="text-center max-w-4xl mx-auto">
