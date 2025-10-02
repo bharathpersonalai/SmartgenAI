@@ -1,0 +1,33 @@
+/* STYLES FOR THE VERTICAL SCROLLBAR (CONTENT AREA)
+  This customizes the scrollbar for Webkit browsers like Chrome, Safari, and Edge.
+*/
+.custom-scrollbar::-webkit-scrollbar {
+  width: 8px; /* Sets the width of the scrollbar */
+}
+
+.custom-scrollbar::-webkit-scrollbar-track {
+  background: #202124; /* Sets the color of the track to match Chrome's dark mode */
+}
+
+.custom-scrollbar::-webkit-scrollbar-thumb {
+  background-color: #5f6368; /* Sets the color of the draggable thumb */
+  border-radius: 10px;
+}
+
+.custom-scrollbar::-webkit-scrollbar-thumb:hover {
+  background-color: #7f8388; /* Makes the thumb slightly lighter on hover */
+}
+
+/* STYLES FOR THE HORIZONTAL SCROLLBAR (TABS ON MOBILE)
+  This hides the scrollbar completely for a clean, native swipe effect.
+*/
+.custom-horizontal-scrollbar::-webkit-scrollbar {
+  height: 0;
+  background: transparent; /* Makes the scrollbar invisible */
+}
+
+/* This is a fallback for Firefox to hide the scrollbar */
+.custom-horizontal-scrollbar {
+  scrollbar-width: none;
+}
+
