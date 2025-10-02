@@ -7,7 +7,7 @@ import ParticlesBackground from '../components/ParticlesBackground';
 import { BrowserCard } from '../components/BrowserCard';
 import AIWebsitesContent from "../components/service-tabs/AIWebsitesContent";
 import WebAppsContent from "../components/service-tabs/WebAppsContent";
-import AutomationContent from "../components/service-tabs/AutomationContent";  
+import AutomationContent from "../components/service-tabs/AutomationContent";
 
 const Home = () => {
   const services = [
@@ -33,46 +33,45 @@ const Home = () => {
         moveParticlesOnHover={true}
       />
 
-      {/* 1. The Header is now a sibling to the main content */}
       <Header />
 
-      {/* 2. The main content container now has top padding to create space for the header */}
-      <main className="relative z-10 pt-28">
+      <main className="relative z-10">
         
-        {/* Hero Section */}
+        {/* ====================================================================== */}
+        {/* THIS IS THE UPDATED HERO SECTION WITH THE FIX */}
+        {/* It now takes up the full screen height and centers its content. */}
+        {/* ====================================================================== */}
         <section
           id="home"
-          className="relative pb-16 text-white overflow-visible"
+          className="min-h-screen flex items-center justify-center text-white text-center px-4"
         >
-          <div className="container mx-auto px-4 py-16">
-            <div className="text-center max-w-4xl mx-auto px-4 sm:py-12 md:py-16">
-              <motion.h1
-                initial={{ opacity: 0, y: -20 }}
-                animate={{ opacity: 1, y: 0 }}
-                transition={{ duration: 0.8 }}
-                className="text-4xl sm:text-5xl md:text-7xl font-bold mb-6 leading-tight"
-              >
-                Beyond Automation{" "}
-                <span className="bg-gradient-to-r from-blue-400 to-purple-400 bg-clip-text text-transparent">
-                  True Innovation
-                </span>
-              </motion.h1>
-              
-              <div className="text-lg sm:text-xl md:text-2xl text-gray-200 mb-8 max-w-2xl mx-auto min-h-[120px]">
-                <FallingText
-                  trigger="click"
-                  fontSize="1.5rem"
-                  text="From custom web applications to intelligent automation, we provide the tools your business needs to lead the future"
-                  highlightWords={["custom", "websites", "intelligent", "automation", "tools"]}
-                  highlightClass="highlighted"
-                  gravity={0.4}
-                />
-              </div>
+          <div> {/* This extra div is for the content inside the flex container */}
+            <motion.h1
+              initial={{ opacity: 0, y: -20 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.8 }}
+              className="text-4xl sm:text-5xl md:text-7xl font-bold mb-6 leading-tight"
+            >
+              Beyond Automation{" "}
+              <span className="bg-gradient-to-r from-blue-400 to-purple-400 bg-clip-text text-transparent">
+                True Innovation
+              </span>
+            </motion.h1>
+            
+            <div className="text-lg sm:text-xl md:text-2xl text-gray-200 mb-8 max-w-2xl mx-auto min-h-[120px]">
+              <FallingText
+                trigger="click"
+                fontSize="1.5rem"
+                text="From custom web applications to intelligent automation, we provide the tools your business needs to lead the future"
+                highlightWords={["custom", "websites", "intelligent", "automation", "tools"]}
+                highlightClass="highlighted"
+                gravity={0.4}
+              />
             </div>
           </div>
         </section>
 
-        {/* Services Section */}
+        {/* Services Section (no changes here) */}
         <section id="services" className="relative py-16">
           <div className="container mx-auto px-4">
             <div className="text-center mb-12">
