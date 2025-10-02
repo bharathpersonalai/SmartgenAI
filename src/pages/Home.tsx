@@ -33,19 +33,21 @@ const Home = () => {
         moveParticlesOnHover={true}
       />
 
+      {/* The Header is separate and floats on top */}
       <Header />
 
+      {/* The main content area starts below the header */}
       <main className="relative z-10">
         
         {/* ====================================================================== */}
-        {/* THIS IS THE UPDATED HERO SECTION WITH THE FIX */}
-        {/* It now takes up the full screen height and centers its content. */}
+        {/* THIS IS THE CORRECTED HERO SECTION */}
         {/* ====================================================================== */}
         <section
           id="home"
-          className="min-h-screen flex items-center justify-center text-white text-center px-4"
+          className="min-h-screen flex items-center justify-center text-white text-center px-4 pt-24" // Added pt-24 for header spacing
         >
-          <div> {/* This extra div is for the content inside the flex container */}
+          {/* This inner div holds the content that will be centered */}
+          <div>
             <motion.h1
               initial={{ opacity: 0, y: -20 }}
               animate={{ opacity: 1, y: 0 }}
@@ -71,7 +73,7 @@ const Home = () => {
           </div>
         </section>
 
-        {/* Services Section (no changes here) */}
+        {/* Services Section */}
         <section id="services" className="relative py-16">
           <div className="container mx-auto px-4">
             <div className="text-center mb-12">
