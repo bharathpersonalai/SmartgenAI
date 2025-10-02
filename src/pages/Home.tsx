@@ -4,14 +4,12 @@ import Footer from "../components/Footer";
 import FallingText from '../components/FallingText'; 
 import { motion } from 'framer-motion';
 import ParticlesBackground from '../components/ParticlesBackground';
-
 import { BrowserCard } from '../components/BrowserCard';
 import AIWebsitesContent from "../components/service-tabs/AIWebsitesContent";
 import WebAppsContent from "../components/service-tabs/WebAppsContent";
 import AutomationContent from "../components/service-tabs/AutomationContent";
 
 const Home = () => {
-  // ** THE TAB TITLES ARE UPDATED HERE **
   const services = [
     {
       title: "AI Powered Custom websites",
@@ -35,39 +33,41 @@ const Home = () => {
         moveParticlesOnHover={true}
       />
 
-      <main className="relative z-10">
+      {/* 1. Added top padding here to create space for the header */}
+      <main className="relative z-10 pt-24 md:pt-28">
         <Header />
         
+        {/* 2. Removed top padding from here to avoid double padding */}
         <section
           id="home"
-          className="relative pt-32 pb-16 text-white overflow-visible"
+          className="relative pb-16 text-white overflow-visible"
         >
-           <div className="container mx-auto px-4">
-              <div className="text-center max-w-4xl mx-auto">
-                <motion.h1
-                  initial={{ opacity: 0, y: -20 }}
-                  animate={{ opacity: 1, y: 0 }}
-                  transition={{ duration: 0.8 }}
-                  className="text-4xl sm:text-5xl md:text-7xl font-bold mb-6 leading-tight"
-                >
-                  Beyond Automation{" "}
-                  <span className="bg-gradient-to-r from-blue-400 to-purple-400 bg-clip-text text-transparent">
-                    True Innovation
-                  </span>
-                </motion.h1>
-                
-                <div className="text-lg sm:text-xl md:text-2xl text-gray-200 mb-8 max-w-2xl mx-auto min-h-[120px]">
-                  <FallingText
-                    trigger="click"
-                    fontSize="1.5rem"
-                    text="From custom web applications to intelligent automation, we provide the tools your business needs to lead the future"
-                    highlightWords={["custom", "websites", "intelligent", "automation", "tools"]}
-                    highlightClass="highlighted"
-                    gravity={0.4}
-                  />
-                </div>
+          <div className="container mx-auto px-4 py-16">
+            <div className="text-center max-w-4xl mx-auto px-4 py-8 sm:py-12 md:py-16">
+              <motion.h1
+                initial={{ opacity: 0, y: -20 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ duration: 0.8 }}
+                className="text-4xl sm:text-5xl md:text-7xl font-bold mb-6 leading-tight"
+              >
+                Beyond Automation{" "}
+                <span className="bg-gradient-to-r from-blue-400 to-purple-400 bg-clip-text text-transparent">
+                  True Innovation
+                </span>
+              </motion.h1>
+              
+              <div className="text-lg sm:text-xl md:text-2xl text-gray-200 mb-8 max-w-2xl mx-auto min-h-[120px]">
+                <FallingText
+                  trigger="click"
+                  fontSize="1.5rem"
+                  text="From custom web applications to intelligent automation, we provide the tools your business needs to lead the future"
+                  highlightWords={["custom", "websites", "intelligent", "automation", "tools"]}
+                  highlightClass="highlighted"
+                  gravity={0.4}
+                />
               </div>
             </div>
+          </div>
         </section>
 
         <section id="services" className="relative py-16">
@@ -94,4 +94,3 @@ const Home = () => {
 };
 
 export default Home;
-
