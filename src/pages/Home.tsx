@@ -7,7 +7,7 @@ import ParticlesBackground from '../components/ParticlesBackground';
 import { BrowserCard } from '../components/BrowserCard';
 import AIWebsitesContent from "../components/service-tabs/AIWebsitesContent";
 import WebAppsContent from "../components/service-tabs/WebAppsContent";
-import AutomationContent from "../components/service-tabs/AutomationContent";
+import AutomationContent from "../components/service-tabs/AutomationContent";  
 
 const Home = () => {
   const services = [
@@ -33,17 +33,19 @@ const Home = () => {
         moveParticlesOnHover={true}
       />
 
-      {/* 1. Added top padding here to create space for the header */}
-      <main className="relative z-10 pt-24 md:pt-28">
-        <Header />
+      {/* 1. The Header is now a sibling to the main content */}
+      <Header />
+
+      {/* 2. The main content container now has top padding to create space for the header */}
+      <main className="relative z-10 pt-28">
         
-        {/* 2. Removed top padding from here to avoid double padding */}
+        {/* Hero Section */}
         <section
           id="home"
           className="relative pb-16 text-white overflow-visible"
         >
           <div className="container mx-auto px-4 py-16">
-            <div className="text-center max-w-4xl mx-auto px-4 py-8 sm:py-12 md:py-16">
+            <div className="text-center max-w-4xl mx-auto px-4 sm:py-12 md:py-16">
               <motion.h1
                 initial={{ opacity: 0, y: -20 }}
                 animate={{ opacity: 1, y: 0 }}
@@ -70,6 +72,7 @@ const Home = () => {
           </div>
         </section>
 
+        {/* Services Section */}
         <section id="services" className="relative py-16">
           <div className="container mx-auto px-4">
             <div className="text-center mb-12">
@@ -94,3 +97,4 @@ const Home = () => {
 };
 
 export default Home;
+
