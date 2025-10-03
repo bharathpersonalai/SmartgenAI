@@ -92,14 +92,17 @@ const FallingText: React.FC<FallingTextProps> = ({
       }
     });
 
+    // CRITICAL FIX: Walls positioned INSIDE the container to contain words
     const boundaryOptions = {
       isStatic: true,
       render: { fillStyle: 'transparent' }
     };
-    const floor = Bodies.rectangle(width / 2, height + 25, width, 50, boundaryOptions);
-    const leftWall = Bodies.rectangle(-25, height / 2, 50, height, boundaryOptions);
-    const rightWall = Bodies.rectangle(width + 25, height / 2, 50, height, boundaryOptions);
-    const ceiling = Bodies.rectangle(width / 2, -25, width, 50, boundaryOptions);
+    
+    const wallThickness = 50;
+    const floor = Bodies.rectangle(width / 2, height - wallThickness/2, width, wallThickness, boundaryOptions);
+    const leftWall = Bodies.rectangle(wallThickness/2, height / 2, wallThickness, height, boundaryOptions);
+    const rightWall = Bodies.rectangle(width - wallThickness/2, height / 2, wallThickness, height, boundaryOptions);
+    const ceiling = Bodies.rectangle(width / 2, wallThickness/2, width, wallThickness, boundaryOptions);
 
     const wordSpans = textRef.current.querySelectorAll<HTMLSpanElement>('.word');
     const wordBodies = Array.from(wordSpans).map(elem => {
@@ -149,8 +152,13 @@ const FallingText: React.FC<FallingTextProps> = ({
     const updateLoop = () => {
       wordBodies.forEach(({ body, elem }) => {
         const { x, y } = body.position;
-        elem.style.left = `${x}px`;
-        elem.style.top = `${y}px`;
+        
+        // Keep words within bounds
+        const clampedX = Math.max(0, Math.min(width, x));
+        const clampedY = Math.max(0, Math.min(height, y));
+        
+        elem.style.left = `${clampedX}px`;
+        elem.style.top = `${clampedY}px`;
         elem.style.transform = `translate(-50%, -50%) rotate(${body.angle}rad)`;
       });
       Matter.Engine.update(engine);
@@ -183,7 +191,7 @@ const FallingText: React.FC<FallingTextProps> = ({
       onMouseEnter={trigger === 'hover' ? handleTrigger : undefined}
       style={{
         position: 'relative',
-        overflow: 'visible'
+        overflow: 'hidden' // CRITICAL FIX: Changed from 'visible' to 'hidden'
       }}
     >
       <div
@@ -199,4 +207,4 @@ const FallingText: React.FC<FallingTextProps> = ({
   );
 };
 
-export default FallingText;
+export default FallingText; 

@@ -10,6 +10,11 @@ import WebAppsContent from "../components/service-tabs/WebAppsContent";
 import AutomationContent from "../components/service-tabs/AutomationContent";
 
 const Home = () => {
+  // Force scroll to top on component mount/reload
+  React.useEffect(() => {
+    window.scrollTo(0, 0);
+  }, []);
+
   const services = [
     {
       title: "AI Powered Custom websites",
@@ -33,42 +38,37 @@ const Home = () => {
         moveParticlesOnHover={true}
       />
 
-      {/* The Header is now a sibling to the main content, as it should be */}
       <Header />
 
-      <main className="relative z-10">
+      <main className="relative z-10 pt-32">
         
-        {/* ====================================================================== */}
-        {/* THIS IS THE CORRECTED HERO SECTION */}
-        {/* It has top padding to create space for the fixed header above it. */}
-        {/* ====================================================================== */}
+        {/* Hero Section */}
         <section
           id="home"
-          className="relative min-h-screen flex items-center justify-center text-white text-center px-4 pt-28" // pt-28 creates space
+          className="relative text-white text-center px-4 py-24 sm:py-32"
         >
-          <div> {/* This inner div holds the content that will be centered */}
-            <motion.h1
-              initial={{ opacity: 0, y: -20 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.8 }}
-              className="text-4xl sm:text-5xl md:text-7xl font-bold mb-6 leading-tight"
-            >
-              Beyond Automation{" "}
-              <span className="bg-gradient-to-r from-blue-400 to-purple-400 bg-clip-text text-transparent">
-                True Innovation
-              </span>
-            </motion.h1>
-            
-            <div className="text-lg sm:text-xl md:text-2xl text-gray-200 mb-8 max-w-2xl mx-auto min-h-[120px]">
-              <FallingText
-                trigger="click"
-                fontSize="1.5rem"
-                text="From custom web applications to intelligent automation, we provide the tools your business needs to lead the future"
-                highlightWords={["custom", "websites", "intelligent", "automation", "tools"]}
-                highlightClass="highlighted"
-                gravity={0.4}
-              />
-            </div>
+          <motion.h1
+            initial={{ opacity: 0, y: -20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.8 }}
+            className="text-4xl sm:text-5xl md:text-7xl font-bold mb-6 leading-tight"
+          >
+            Beyond Automation{" "}
+            <span className="bg-gradient-to-r from-blue-400 to-purple-400 bg-clip-text text-transparent">
+              True Innovation
+            </span>
+          </motion.h1>
+          
+          <div className="text-lg sm:text-xl md:text-2xl text-gray-200 mb-8 max-w-2xl mx-auto h-[200px] sm:h-[180px] md:h-[160px] relative overflow-hidden">
+            <FallingText
+              key={Date.now()} // Force remount on page load
+              trigger="click"
+              fontSize="1.5rem"
+              text="From custom web applications to intelligent automation, we provide the tools your business needs to lead the future"
+              highlightWords={["custom", "websites", "intelligent", "automation", "tools"]}
+              highlightClass="highlighted"
+              gravity={0.4}
+            />
           </div>
         </section>
 
@@ -97,4 +97,3 @@ const Home = () => {
 };
 
 export default Home;
-
