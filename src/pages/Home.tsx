@@ -10,9 +10,29 @@ import WebAppsContent from "../components/service-tabs/WebAppsContent";
 import AutomationContent from "../components/service-tabs/AutomationContent";
 
 const Home = () => {
-  // Force scroll to top on component mount/reload
+  // Force scroll to top on component mount/reload - iOS specific fix
   React.useEffect(() => {
+    // Immediate scroll
     window.scrollTo(0, 0);
+    document.documentElement.scrollTop = 0;
+    document.body.scrollTop = 0;
+    
+    // iOS Safari sometimes needs a delayed scroll
+    const timer = setTimeout(() => {
+      window.scrollTo(0, 0);
+      document.documentElement.scrollTop = 0;
+      document.body.scrollTop = 0;
+    }, 0);
+
+    // Additional delayed scroll for iOS
+    const timer2 = setTimeout(() => {
+      window.scrollTo(0, 0);
+    }, 100);
+
+    return () => {
+      clearTimeout(timer);
+      clearTimeout(timer2);
+    };
   }, []);
 
   const services = [
