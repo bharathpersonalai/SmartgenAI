@@ -15,7 +15,6 @@ interface ParticlesProps {
   sizeRandomness?: number;
   cameraDistance?: number;
   disableRotation?: boolean;
-  motionEnabled?: boolean; // New prop to activate gyroscope 
   className?: string;
 }
 

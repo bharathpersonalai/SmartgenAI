@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React from "react";
 import Header from "../components/Header";
 import Footer from "../components/Footer";
 import FallingText from '../components/FallingText'; 
@@ -10,6 +10,31 @@ import WebAppsContent from "../components/service-tabs/WebAppsContent";
 import AutomationContent from "../components/service-tabs/AutomationContent";
 
 const Home = () => {
+  // Force scroll to top on component mount/reload - iOS specific fix
+  React.useEffect(() => {
+    // Immediate scroll
+    window.scrollTo(0, 0);
+    document.documentElement.scrollTop = 0;
+    document.body.scrollTop = 0;
+    
+    // iOS Safari sometimes needs a delayed scroll
+    const timer = setTimeout(() => {
+      window.scrollTo(0, 0);
+      document.documentElement.scrollTop = 0;
+      document.body.scrollTop = 0;
+    }, 0);
+
+    // Additional delayed scroll for iOS
+    const timer2 = setTimeout(() => {
+      window.scrollTo(0, 0);
+    }, 100);
+
+    return () => {
+      clearTimeout(timer);
+      clearTimeout(timer2);
+    };
+  }, []);
+
   const services = [
     {
       title: "AI Powered Custom websites",
@@ -25,41 +50,22 @@ const Home = () => {
     },
   ];
 
-  // State to track if motion effects are enabled
-  const [motionEnabled, setMotionEnabled] = useState(false);
-
-  // Function to request permission for motion events
-  const handleEnableMotion = () => {
-    if (typeof (DeviceMotionEvent as any).requestPermission === 'function') {
-      (DeviceMotionEvent as any).requestPermission()
-        .then((permissionState: string) => {
-          if (permissionState === 'granted') {
-            setMotionEnabled(true);
-          }
-        })
-        .catch(console.error);
-    } else {
-      setMotionEnabled(true);
-    }
-  };
-
   return (
     <div className="bg-black">
       <ParticlesBackground 
         className="fixed top-0 left-0 w-full h-full z-0" 
         particleCount={800} 
         moveParticlesOnHover={true}
-        motionEnabled={motionEnabled} // Pass the state to the component
       />
 
       <Header />
 
-      <main className="relative z-10 pt-28">
+      <main className="relative z-10 pt-32">
         
         {/* Hero Section */}
         <section
           id="home"
-          className="relative text-white text-center px-4 py-16 sm:py-24"
+          className="relative text-white text-center px-4 py-24 sm:py-32"
         >
           <motion.h1
             initial={{ opacity: 0, y: -20 }}
@@ -73,8 +79,9 @@ const Home = () => {
             </span>
           </motion.h1>
           
-          <div className="text-lg sm:text-xl md:text-2xl text-gray-200 mb-8 max-w-2xl mx-auto min-h-[120px]">
+          <div className="text-lg sm:text-xl md:text-2xl text-gray-200 mb-8 max-w-2xl mx-auto h-[200px] sm:h-[180px] md:h-[160px] relative overflow-hidden">
             <FallingText
+              key={Date.now()} // Force remount on page load
               trigger="click"
               fontSize="1.5rem"
               text="From custom web applications to intelligent automation, we provide the tools your business needs to lead the future"
@@ -105,21 +112,8 @@ const Home = () => {
 
         <Footer />
       </main>
-
-      {/* Motion Enable Button - Only on mobile and if not already enabled */}
-      {!motionEnabled && (
-        <div className="md:hidden fixed bottom-4 left-1/2 -translate-x-1/2 z-20">
-          <button 
-            onClick={handleEnableMotion}
-            className="px-4 py-2 bg-white/10 backdrop-blur-md rounded-full text-white text-sm border border-white/20"
-          >
-            Enable Motion Effects
-          </button>
-        </div>
-      )}
     </div>
   );
 };
 
 export default Home;
-
