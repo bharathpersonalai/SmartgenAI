@@ -69,12 +69,15 @@ export const BrowserCard: React.FC<BrowserCardProps> = ({ tabs, className }) => 
       </div>
 
       {/* Chrome Tabs Bar */}
-      <div className="bg-[#35363a] pt-2">
-        <div ref={tabsContainerRef} className="flex items-end px-2 overflow-x-auto custom-horizontal-scrollbar">
+       <div className="bg-[#35363a] pt-2">
+        <div
+          ref={tabsContainerRef}
+          className="flex items-end px-2 overflow-x-auto custom-horizontal-scrollbar"
+          role="tablist"
+        >
           {tabs.map((tab, index) => (
             <button
               key={index}
-              // We assign a ref from our array to each button as it's rendered
               ref={(el) => (tabRefs.current[index] = el)}
               onClick={() => handleTabClick(index)}
               className={cn(
@@ -83,13 +86,18 @@ export const BrowserCard: React.FC<BrowserCardProps> = ({ tabs, className }) => 
                   ? "bg-[#202124] text-white border-blue-500"
                   : "text-gray-400 border-transparent hover:bg-white/5"
               )}
+              role="tab"
+              aria-selected={activeTab === index}
+              aria-controls={`tabpanel-${index}`}
+              tabIndex={activeTab === index ? 0 : -1}
+              id={`tab-${index}`}
             >
               <span>{tab.title}</span>
               <span className="text-gray-500 hover:text-white">✕</span>
             </button>
           ))}
         </div>
-      </div>
+      </div> 
       
       {/* URL Bar */}
       <div className="p-2 bg-[#202124] flex items-center gap-2 border-b border-white/10">
@@ -102,13 +110,16 @@ export const BrowserCard: React.FC<BrowserCardProps> = ({ tabs, className }) => 
       </div>
 
       {/* Main Content Area */}
-      <div className="relative">
+       <div className="relative">
         <div 
           ref={contentRef}
           className="p-8 h-[450px] overflow-y-auto custom-scrollbar bg-[#202124]"
+          role="tabpanel"
+          id={`tabpanel-${activeTab}`}
+          aria-labelledby={`tab-${activeTab}`}
         >
           {tabs[activeTab]?.content}
-        </div>
+        </div> 
         
         {/* Mobile Navigation Arrows */}
         <div className="md:hidden">

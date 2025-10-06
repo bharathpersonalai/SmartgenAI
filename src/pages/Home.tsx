@@ -1,22 +1,25 @@
 import React from "react";
 import Header from "../components/Header";
 import Footer from "../components/Footer";
-import FallingText from '../components/FallingText'; 
-import { motion } from 'framer-motion';
-import ParticlesBackground from '../components/ParticlesBackground';
-import { BrowserCard } from '../components/BrowserCard';
+import FallingText from "../components/FallingText";
+import { motion } from "framer-motion";
+import ParticlesBackground from "../components/ParticlesBackground";
+import { BrowserCard } from "../components/BrowserCard";
 import AIWebsitesContent from "../components/service-tabs/AIWebsitesContent";
 import WebAppsContent from "../components/service-tabs/WebAppsContent";
 import AutomationContent from "../components/service-tabs/AutomationContent";
 
 const Home = () => {
+  // Stable key for FallingText, changes only on page reload
+  const fallingTextKeyRef = React.useRef(Date.now());
+
   // Force scroll to top on component mount/reload - iOS specific fix
   React.useEffect(() => {
     // Immediate scroll
     window.scrollTo(0, 0);
     document.documentElement.scrollTop = 0;
     document.body.scrollTop = 0;
-    
+
     // iOS Safari sometimes needs a delayed scroll
     const timer = setTimeout(() => {
       window.scrollTo(0, 0);
@@ -38,37 +41,44 @@ const Home = () => {
   const services = [
     {
       title: "AI Powered Custom websites",
-      content: <AIWebsitesContent />
+      content: <AIWebsitesContent />,
     },
     {
       title: "Smart Web Applications",
-      content: <WebAppsContent />
+      content: <WebAppsContent />,
     },
     {
       title: "AI Automation tools",
-      content: <AutomationContent />
+      content: <AutomationContent />,
     },
   ];
 
   return (
     <div className="bg-black">
-      <ParticlesBackground 
-        className="fixed top-0 left-0 w-full h-full z-0" 
-        particleCount={1500}  
-        particleBaseSize = {90} 
+      <a
+        href="#home"
+        className="sr-only focus:not-sr-only absolute top-2 left-2 bg-blue-600 text-white px-4 py-2 rounded z-50"
+      >
+        Skip to main content
+      </a> {/* Skip link for accessibility */} 
+      <ParticlesBackground
+        className="fixed top-0 left-0 w-full h-full z-0"
+        particleCount={1500}
+        particleBaseSize={90}
         moveParticlesOnHover={true}
       />
 
-      <Header />
+      <Header /> 
 
-      <main className="relative z-10 pt-32">
-        
+      <main className="relative z-10 pt-30" aria-label="Homepage main content">
         {/* Hero Section */}
         <section
           id="home"
-          className="relative text-white text-center px-4 py-24 sm:py-32"
+          className="relative text-white text-center px-4 py-24 sm:py-32 min-h-screen flex flex-col justify-center items-center" 
+          aria-labelledby="hero-heading"
         >
           <motion.h1
+            id="hero-heading"
             initial={{ opacity: 0, y: -20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.8 }}
@@ -79,14 +89,20 @@ const Home = () => {
               True Innovation
             </span>
           </motion.h1>
-          
+
           <div className="text-lg sm:text-xl md:text-2xl text-gray-200 mb-8 max-w-2xl mx-auto h-[200px] sm:h-[180px] md:h-[160px] relative overflow-hidden">
             <FallingText
-              key={Date.now()} // Force remount on page load
+              key={fallingTextKeyRef.current} // Force remount on page load
               trigger="click"
               fontSize="1.5rem"
               text="From custom web applications to intelligent automation, we provide the tools your business needs to lead the future"
-              highlightWords={["custom", "websites", "intelligent", "automation", "tools"]}
+              highlightWords={[
+                "custom",
+                "websites",
+                "intelligent",
+                "automation",
+                "tools",
+              ]}
               highlightClass="highlighted"
               gravity={0.4}
             />
@@ -97,14 +113,17 @@ const Home = () => {
         <section id="services" className="relative py-16">
           <div className="container mx-auto px-4">
             <div className="text-center mb-12">
-              <h2 className="text-4xl font-bold text-white mb-4 backdrop-blur-sm bg-black/20 rounded-md py-2 px-4 inline-block">
+              <h2
+                id="services-heading"
+                className="text-4xl font-bold text-white mb-4 backdrop-blur-sm bg-black/20 rounded-md py-2 px-4 inline-block"
+              >
                 AI-Driven Services
               </h2>
               <p className="text-xl text-gray-300 max-w-2xl mx-auto backdrop-blur-sm bg-black/20 rounded-md py-2 px-4">
                 Powered by artificial intelligence to deliver superior results
               </p>
             </div>
-            
+
             <div className="flex justify-center">
               <BrowserCard tabs={services} />
             </div>

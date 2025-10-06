@@ -189,10 +189,20 @@ const FallingText: React.FC<FallingTextProps> = ({
       className="falling-text-container"
       onClick={trigger === 'click' ? handleTrigger : undefined}
       onMouseEnter={trigger === 'hover' ? handleTrigger : undefined}
+        role={trigger === 'click' || trigger === 'hover' ? "button" : undefined}
+    tabIndex={trigger === 'click' || trigger === 'hover' ? 0 : undefined}
+    aria-label={trigger === 'click' || trigger === 'hover' ? "Activate falling text effect" : undefined}
+    onKeyDown={
+      (trigger === 'click' || trigger === 'hover')
+        ? (e) => {
+            if (e.key === "Enter" || e.key === " ") handleTrigger();
+          }
+        : undefined
+    } 
       style={{
         position: 'relative',
         overflow: 'hidden' // CRITICAL FIX: Changed from 'visible' to 'hidden'
-      }}
+      }} 
     >
       <div
         ref={textRef}
