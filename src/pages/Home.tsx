@@ -74,7 +74,7 @@ const Home = () => {
         {/* Hero Section */}
         <section
           id="home"
-          className="relative text-white text-center px-4 py-24 sm:py-32 min-h-screen flex flex-col justify-center items-center" 
+          className="relative text-white text-center px-4 py-24 sm:py-32" 
           aria-labelledby="hero-heading"
         >
           <motion.h1
