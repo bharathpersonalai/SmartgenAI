@@ -70,7 +70,7 @@ const Home = () => {
 
       <Header /> 
 
-      <main className="relative z-10 pt-30" aria-label="Homepage main content">
+      <main className="relative z-10 pt-31" aria-label="Homepage main content">
         {/* Hero Section */}
         <section
           id="home"
