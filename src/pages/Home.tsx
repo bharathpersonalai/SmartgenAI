@@ -63,7 +63,7 @@ const Home = () => {
       </a> {/* Skip link for accessibility */} 
       <ParticlesBackground
         className="fixed top-0 left-0 w-full h-full z-0"
-        particleCount={1500}
+        particleCount={4500}
         particleBaseSize={90}
         moveParticlesOnHover={true}
       />

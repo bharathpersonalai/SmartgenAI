@@ -112,7 +112,7 @@ const Footer = () => {
         </div>
         <div className="border-t border-gray-800 pt-8 text-center">
           <p className="text-gray-400">
-            Copyright © 2025 SmartgenAI Innovations. All rights reserved.
+            Copyright © 2025 SmartgenAI Innovations LLP. All rights reserved. 
           </p>
         </div>
       </div>

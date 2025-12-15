@@ -32,8 +32,8 @@ const PricingPage = () => {
   const plans: Plan[] = [
     {
       name: "Portfolio Website",
-      price: "₹499",
-      originalPrice: "₹1500",
+      price: "₹599",
+      originalPrice: "₹1500", 
       description: "Perfect for individuals and freelancers.",
       features: [
         "Up to 3 pages",
@@ -41,16 +41,16 @@ const PricingPage = () => {
         "Mobile friendly",
         "Social media links",
       ],
-      discountPercentage: 65,
+      discountPercentage: 60, 
       priceUnit: "/one-time",
     },
     {
       name: "AI Standard",
-      price: "Starts from ₹1999",
+      price: "Starts from ₹2,999",
       originalPrice: null,
       description: "Ideal for small businesses and startups.",
       features: [
-        "Up to 5 pages",
+        "Up to 4 pages",
         "Responsive design",
         "Basic SEO Setup",
         "Contact Form",
@@ -59,27 +59,27 @@ const PricingPage = () => {
     },
     {
       name: "AI Professional",
-      price: "Starts from ₹4999",
+      price: "Starts from ₹4,999", 
       originalPrice: null,
       description: "For growing businesses ready to scale.",
       features: [
         "Everything in AI Standard",
-        "Chatgpt/Gemini AI Integration",
-        "6 months free web hosting",
+        "Up to 6 pages",
+        "6 months free web hosting",  
         "Priority Support",
       ],
       popular: true,
     },
     {
       name: "AI Enterprise",
-      price: "Coming Soon",
+      price: "Starts from ₹19,999", 
       originalPrice: null,
       description: "Custom solutions for large-scale applications.",
       features: [
-        "Custom AI Web Application",
-        "Advanced AI Features",
-        "Database Integration",
-        "1 Year AI Support",
+        "Custom Web Application",
+        "Tailored to your business needs",
+        "Secure Database & User Authentication",
+        "All in One CRM & Business Management Tool",
       ],
     },
   ];
