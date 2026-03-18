@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import { useState, useEffect } from 'react';
 
 const Header = () => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
@@ -16,6 +16,7 @@ const Header = () => {
   const navLinks = [
     { name: 'Home', href: '/home' },
     { name: 'Services', href: '/services' },
+    { name: 'Projects', href: '/projects' },
     { name: 'Pricing', href: '/pricing' },
     { name: 'Contact', href: '/contact' },
     { name: 'About', href: '/about' },

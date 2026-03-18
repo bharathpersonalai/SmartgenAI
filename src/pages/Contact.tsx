@@ -3,11 +3,11 @@ import React, { useState, useRef, useEffect } from "react";
 import Header from "../components/Header";
 import Footer from "../components/Footer";
 import toast from "react-hot-toast";
-import { generateWithOllama } from "../services/ollamaService";
+import { generateWithGemini } from "../services/geminiService";
 
 const MAX_AI_DRAFTS = 3;
 const AI_USAGE_KEY = "smartgen_ai_draft_data";
-const RESET_PERIOD_MS = 2 * 24 * 60 * 60 * 1000; // 2 days in milliseconds
+const RESET_PERIOD_MS = 4 * 24 * 60 * 60 * 1000; // 2 days in milliseconds
 
 interface AiUsageData {
   count: number;
@@ -154,14 +154,14 @@ const ContactPage = () => {
     try {
       const systemPrompt = `You are a helpful assistant. Write a professional and friendly contact message for a web development company. The user wants to inquire about: ${aiPrompt}. Keep it concise (2-3 paragraphs max). Do not include any greeting like "Dear" or signature.`;
 
-      const response = await generateWithOllama(systemPrompt);
+      const response = await generateWithGemini(systemPrompt);
       setAiGeneratedText(response);
 
       // Increment usage count after successful generation
       saveUsageData(aiUsageCount + 1);
     } catch (error) {
-      console.error("Ollama error:", error);
-      toast.error("Failed to generate with AI. Make sure Ollama is running.");
+      console.error("AI generation error:", error);
+      toast.error("Failed to generate with AI. Please try again.");
     } finally {
       setIsGenerating(false);
     }
