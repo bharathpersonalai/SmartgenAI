@@ -48,7 +48,9 @@ export async function generateWithGemini(prompt: string): Promise<string> {
 
                 // If it's a rate limit (429), don't try other models, just fail
                 if (error.message?.includes("429")) {
-                    throw new Error("Rate limit exceeded. Please try again later.");
+                    const rateLimitError = new Error("Rate limit exceeded. Please try again later.");
+                   (rateLimitError as any).isRateLimit = true;
+                   throw rateLimitError; 
                 }
             }
         }

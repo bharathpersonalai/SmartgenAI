@@ -7,8 +7,7 @@ import { generateWithGemini } from "../services/geminiService";
 
 const MAX_AI_DRAFTS = 3;
 const AI_USAGE_KEY = "smartgen_ai_draft_data";
-const RESET_PERIOD_MS = 4 * 24 * 60 * 60 * 1000; // 2 days in milliseconds
-
+const RESET_PERIOD_MS = 4 * 24 * 60 * 60 * 1000; // 4 days in milliseconds
 interface AiUsageData {
   count: number;
   resetTime: number; // timestamp when the limit resets
